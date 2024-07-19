@@ -5,16 +5,13 @@ from typing import Optional, Type, Any
 from pydantic.v1 import BaseModel, Field
 from ..base_tool import BaseTool
 
-
 class FixedScrapeWebsiteToolSchema(BaseModel):
-    """ScrapeWebsiteTool 的输入。"""
+    """ScrapeWebsiteTool 的输入"""
     pass
 
-
 class ScrapeWebsiteToolSchema(FixedScrapeWebsiteToolSchema):
-    """ScrapeWebsiteTool 的输入。"""
-    website_url: str = Field(..., description="要读取文件的网站 URL（必填）")
-
+    """ScrapeWebsiteTool 的输入"""
+    website_url: str = Field(..., description="要读取文件的网站网址（必填）")
 
 class ScrapeWebsiteTool(BaseTool):
     name: str = "读取网站内容"
@@ -42,8 +39,8 @@ class ScrapeWebsiteTool(BaseTool):
                 self.cookies = {cookies["name"]: os.getenv(cookies["value"])}
 
     def _run(
-        self,
-        **kwargs: Any,
+            self,
+            **kwargs: Any,
     ) -> Any:
         website_url = kwargs.get('website_url', self.website_url)
         page = requests.get(
@@ -52,7 +49,10 @@ class ScrapeWebsiteTool(BaseTool):
             headers=self.headers,
             cookies=self.cookies if self.cookies else {}
         )
-        parsed = BeautifulSoup(page.content, "html.parser")
+
+        page.encoding = page.apparent_encoding
+        parsed = BeautifulSoup(page.text, "html.parser")
+
         text = parsed.get_text()
         text = '\n'.join([i for i in text.split('\n') if i.strip() != ''])
         text = ' '.join([i for i in text.split(' ') if i.strip() != ''])

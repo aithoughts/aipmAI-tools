@@ -1,3 +1,4 @@
+import datetime
 import os
 import json
 import requests
@@ -15,19 +16,19 @@ def _save_results_to_file(content: str) -> None:
 
 
 class SerperDevToolSchema(BaseModel):
-    """SerperDevTool 的输入。"""
+    """SerperDevTool 的输入"""
     search_query: str = Field(..., description="要用于搜索互联网的必填搜索查询")
 
 class SerperDevTool(BaseTool):
     name: str = "搜索互联网"
-    description: str = "一个可以使用 search_query 搜索互联网的工具。"
+    description: str = "可以使用 search_query 搜索互联网的工具。"
     args_schema: Type[BaseModel] = SerperDevToolSchema
     search_url: str = "https://google.serper.dev/search"
-    country: Optional[str] = None
-    location: Optional[str] = None
-    locale: Optional[str] = None
-    n_results: int = Field(default=10, description="要返回的搜索结果数量")
-    save_file: bool = Field(default=False, description="确定是否将结果保存到文件的标志")
+    country: Optional[str] = ''
+    location: Optional[str] = ''
+    locale: Optional[str] = ''
+    n_results: int = 10
+    save_file: bool = False
 
     def _run(
         self,
@@ -39,18 +40,24 @@ class SerperDevTool(BaseTool):
         n_results = kwargs.get('n_results', self.n_results)
 
         payload = { "q": search_query, "num": n_results }
-        payload["gl"] = self.country if self.country
-        payload["location"] = self.country if self.location
-        payload["hl"] = self.country if self.locale
-        
+
+        if self.country != '':
+            payload["gl"] = self.country
+        if self.location != '':
+            payload["location"] = self.location
+        if self.locale != '':
+            payload["hl"] = self.locale
+
         payload = json.dumps(payload)
 
         headers = {
             'X-API-KEY': os.environ['SERPER_API_KEY'],
             'content-type': 'application/json'
         }
+
         response = requests.request("POST", self.search_url, headers=headers, data=payload)
         results = response.json()
+
         if 'organic' in results:
             results = results['organic'][:self.n_results]
             string = []
@@ -59,7 +66,7 @@ class SerperDevTool(BaseTool):
                     string.append('\n'.join([
                         f"标题：{result['title']}",
                         f"链接：{result['link']}",
-                        f"片段：{result['snippet']}",
+                        f"摘要：{result['snippet']}",
                         "---"
                     ]))
                 except KeyError:
