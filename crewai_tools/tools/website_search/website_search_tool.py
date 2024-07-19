@@ -7,32 +7,32 @@ from ..rag.rag_tool import RagTool
 
 
 class FixedWebsiteSearchToolSchema(BaseModel):
-    """Input for WebsiteSearchTool."""
+    """WebsiteSearchTool 的输入"""
 
     search_query: str = Field(
         ...,
-        description="Mandatory search query you want to use to search a specific website",
+        description="用于在特定网站上进行搜索的必需搜索查询",
     )
 
 
 class WebsiteSearchToolSchema(FixedWebsiteSearchToolSchema):
-    """Input for WebsiteSearchTool."""
+    """WebsiteSearchTool 的输入"""
 
     website: str = Field(
-        ..., description="Mandatory valid website URL you want to search on"
+        ..., description="要在其上进行搜索的必需的有效网站 URL"
     )
 
 
 class WebsiteSearchTool(RagTool):
-    name: str = "Search in a specific website"
-    description: str = "A tool that can be used to semantic search a query from a specific URL content."
+    name: str = "在特定网站中搜索"
+    description: str = "一个可以用来从特定 URL 内容中进行语义搜索的工具。"
     args_schema: Type[BaseModel] = WebsiteSearchToolSchema
 
     def __init__(self, website: Optional[str] = None, **kwargs):
         super().__init__(**kwargs)
         if website is not None:
             self.add(website)
-            self.description = f"A tool that can be used to semantic search a query from {website} website content."
+            self.description = f"一个可以用来从 {website} 网站内容中进行语义搜索的工具。"
             self.args_schema = FixedWebsiteSearchToolSchema
             self._generate_description()
 

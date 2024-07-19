@@ -3,22 +3,22 @@ from pydantic.v1 import BaseModel, Field
 from crewai_tools.tools.base_tool import BaseTool
 
 class SpiderToolSchema(BaseModel):
-    url: str = Field(description="Website URL")
+    url: str = Field(description="网站 URL")
     params: Optional[Dict[str, Any]] = Field(
-        description="Set additional params. Options include:\n"
-                    "- `limit`: Optional[int] - The maximum number of pages allowed to crawl per website. Remove the value or set it to `0` to crawl all pages.\n"
-                    "- `depth`: Optional[int] - The crawl limit for maximum depth. If `0`, no limit will be applied.\n"
-                    "- `metadata`: Optional[bool] - Boolean to include metadata or not. Defaults to `False` unless set to `True`. If the user wants metadata, include params.metadata = True.\n"
-                    "- `query_selector`: Optional[str] - The CSS query selector to use when extracting content from the markup.\n"
+        description="设置附加参数。选项包括：\n"
+                    "- `limit`: Optional[int] - 每个网站允许爬取的最大页面数。删除该值或将其设置为 `0` 以爬取所有页面。\n"
+                    "- `depth`: Optional[int] - 最大深度的爬取限制。如果为 `0`，则不应用限制。\n"
+                    "- `metadata`: Optional[bool] - 是否包含元数据的布尔值。默认为 `False`，除非设置为 `True`。如果用户想要元数据，请包含 params.metadata = True。\n"
+                    "- `query_selector`: Optional[str] - 从标记中提取内容时使用的 CSS 查询选择器。\n"
     )
     mode: Literal["scrape", "crawl"] = Field(
         default="scrape",
-        description="Mode, the only two allowed modes are `scrape` or `crawl`. Use `scrape` to scrape a single page and `crawl` to crawl the entire website following subpages. These modes are the only allowed values even when ANY params is set."
+        description="模式，仅允许两种模式：`scrape` 或 `crawl`。使用 `scrape` 抓取单个页面，使用 `crawl` 抓取整个网站（包括子页面）。即使设置了 ANY 参数，这些模式也是唯一允许的值。"
     )
 
 class SpiderTool(BaseTool):
-    name: str = "Spider scrape & crawl tool"
-    description: str = "Scrape & Crawl any url and return LLM-ready data."
+    name: str = "Spider 抓取和爬取工具"
+    description: str = "抓取和爬取任何 URL 并返回 LLM 就绪的数据。"
     args_schema: Type[BaseModel] = SpiderToolSchema
     api_key: Optional[str] = None
     spider: Optional[Any] = None
@@ -29,7 +29,7 @@ class SpiderTool(BaseTool):
             from spider import Spider # type: ignore
         except ImportError:
            raise ImportError(
-               "`spider-client` package not found, please run `pip install spider-client`"
+               "找不到 `spider-client` 包，请运行 `pip install spider-client`"
            )
 
         self.spider = Spider(api_key=api_key)
@@ -42,10 +42,10 @@ class SpiderTool(BaseTool):
     ):
         if mode not in ["scrape", "crawl"]:
             raise ValueError(
-                "Unknown mode in `mode` parameter, `scrape` or `crawl` are the allowed modes"
+                "在 `mode` 参数中使用了未知模式，允许的模式为 `scrape` 或 `crawl`"
             )
 
-        # Ensure 'return_format': 'markdown' is always included
+        # 确保始终包含 'return_format': 'markdown'
         if params:
             params["return_format"] = "markdown"
         else:

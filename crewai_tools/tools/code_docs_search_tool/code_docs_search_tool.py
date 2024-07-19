@@ -7,24 +7,24 @@ from ..rag.rag_tool import RagTool
 
 
 class FixedCodeDocsSearchToolSchema(BaseModel):
-    """Input for CodeDocsSearchTool."""
+    """CodeDocsSearchTool 的输入"""
 
     search_query: str = Field(
         ...,
-        description="Mandatory search query you want to use to search the Code Docs content",
+        description="您要用於搜索代码文档内容的必填搜索查询",
     )
 
 
 class CodeDocsSearchToolSchema(FixedCodeDocsSearchToolSchema):
-    """Input for CodeDocsSearchTool."""
+    """CodeDocsSearchTool 的输入"""
 
-    docs_url: str = Field(..., description="Mandatory docs_url path you want to search")
+    docs_url: str = Field(..., description="您要搜索的必填 docs_url 路径")
 
 
 class CodeDocsSearchTool(RagTool):
-    name: str = "Search a Code Docs content"
+    name: str = "搜索代码文档内容"
     description: str = (
-        "A tool that can be used to semantic search a query from a Code Docs content."
+        "可用于从代码文档内容中进行语义搜索查询的工具。"
     )
     args_schema: Type[BaseModel] = CodeDocsSearchToolSchema
 
@@ -32,7 +32,7 @@ class CodeDocsSearchTool(RagTool):
         super().__init__(**kwargs)
         if docs_url is not None:
             self.add(docs_url)
-            self.description = f"A tool that can be used to semantic search a query the {docs_url} Code Docs content."
+            self.description = f"一个可以用来对 {docs_url} 代码文档内容进行语义搜索查询的工具。"
             self.args_schema = FixedCodeDocsSearchToolSchema
             self._generate_description()
 

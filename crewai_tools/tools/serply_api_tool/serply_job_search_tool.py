@@ -7,19 +7,19 @@ from crewai_tools.tools.rag.rag_tool import RagTool
 
 
 class SerplyJobSearchToolSchema(BaseModel):
-    """Input for Serply Scholar Search."""
-    search_query: str = Field(..., description="Mandatory search query you want to use to fetch jobs postings.")
+    """Serply 招聘搜索的输入。"""
+    search_query: str = Field(..., description="要用于获取招聘信息的必填搜索查询。")
 
 
 class SerplyJobSearchTool(RagTool):
-    name: str = "Job Search"
-    description: str = "A tool to perform to perform a job search in the US with a search_query."
+    name: str = "招聘搜索"
+    description: str = "一个使用 search_query 在美国执行招聘搜索的工具。"
     args_schema: Type[BaseModel] = SerplyJobSearchToolSchema
     request_url: str = "https://api.serply.io/v1/job/search/"
     proxy_location: Optional[str] = "US"
     """
-        proxy_location: (str): Where to get jobs, specifically for a specific country results.
-            - Currently only supports US
+        proxy_location: (str): 在哪里获取招聘信息，特别是针对特定国家/地区的结果。
+            - 当前仅支持美国
     """
     headers: Optional[dict] = {}
 
@@ -45,7 +45,7 @@ class SerplyJobSearchTool(RagTool):
         elif "search_query" in kwargs:
             query_payload["q"] = kwargs["search_query"]
 
-        # build the url
+        # 构建 URL
         url = f"{self.request_url}{urlencode(query_payload)}"
 
         response = requests.request("GET", url, headers=self.headers)
@@ -59,17 +59,17 @@ class SerplyJobSearchTool(RagTool):
         for job in jobs:
             try:
                 string.append('\n'.join([
-                    f"Position: {job['position']}",
-                    f"Employer: {job['employer']}",
-                    f"Location: {job['location']}",
-                    f"Link: {job['link']}",
-                    f"""Highest: {', '.join([h for h in job['highlights']])}""",
-                    f"Is Remote: {job['is_remote']}",
-                    f"Is Hybrid: {job['is_remote']}",
+                    f"职位：{job['position']}",
+                    f"雇主：{job['employer']}",
+                    f"地点：{job['location']}",
+                    f"链接：{job['link']}",
+                    f"""最精彩的部分：{', '.join([h for h in job['highlights']])}""",
+                    f"是否远程：{job['is_remote']}",
+                    f"是否混合：{job['is_remote']}",
                     "---"
                 ]))
             except KeyError:
                 continue
 
         content = '\n'.join(string)
-        return f"\nSearch results: {content}\n"
+        return f"\n搜索结果：{content}\n"

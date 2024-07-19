@@ -8,23 +8,23 @@ from ..rag.rag_tool import RagTool
 
 
 class FixedPDFSearchToolSchema(BaseModel):
-    """Input for PDFSearchTool."""
+    """PDFSearchTool 的输入。"""
 
     query: str = Field(
-        ..., description="Mandatory query you want to use to search the PDF's content"
+        ..., description="要用于搜索 PDF 内容的必填查询"
     )
 
 
 class PDFSearchToolSchema(FixedPDFSearchToolSchema):
-    """Input for PDFSearchTool."""
+    """PDFSearchTool 的输入。"""
 
-    pdf: str = Field(..., description="Mandatory pdf path you want to search")
+    pdf: str = Field(..., description="要搜索的必填 PDF 路径")
 
 
 class PDFSearchTool(RagTool):
-    name: str = "Search a PDF's content"
+    name: str = "搜索 PDF 内容"
     description: str = (
-        "A tool that can be used to semantic search a query from a PDF's content."
+        "一个可以用来从 PDF 内容中进行语义搜索的工具。"
     )
     args_schema: Type[BaseModel] = PDFSearchToolSchema
 
@@ -32,7 +32,7 @@ class PDFSearchTool(RagTool):
         super().__init__(**kwargs)
         if pdf is not None:
             self.add(pdf)
-            self.description = f"A tool that can be used to semantic search a query the {pdf} PDF's content."
+            self.description = f"一个可以用来在 {pdf} PDF 内容中进行语义搜索的工具。"
             self.args_schema = FixedPDFSearchToolSchema
             self._generate_description()
 

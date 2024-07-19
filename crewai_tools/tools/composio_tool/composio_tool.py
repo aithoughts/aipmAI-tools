@@ -1,5 +1,5 @@
 """
-Composio tools wrapper.
+Composio 工具包装器。
 """
 
 import typing as t
@@ -10,17 +10,17 @@ from crewai_tools.tools.base_tool import BaseTool
 
 
 class ComposioTool(BaseTool):
-    """Wrapper for composio tools."""
+    """Composio 工具的包装器。"""
 
     composio_action: t.Callable
 
     def _run(self, *args: t.Any, **kwargs: t.Any) -> t.Any:
-        """Run the composio action with given arguments."""
+        """使用给定的参数运行 composio 操作。"""
         return self.composio_action(*args, **kwargs)
 
     @staticmethod
     def _check_connected_account(tool: t.Any, toolset: t.Any) -> None:
-        """Check if connected account is required and if required it exists or not."""
+        """检查是否需要连接帐户，如果需要，检查帐户是否存在。"""
         from composio import Action
         from composio.client.collections import ConnectedAccountModel
 
@@ -34,8 +34,8 @@ class ComposioTool(BaseTool):
         )
         if tool.app not in [connection.appUniqueId for connection in connections]:
             raise RuntimeError(
-                f"No connected account found for app `{tool.app}`; "
-                f"Run `composio add {tool.app}` to fix this"
+                f"应用程序 `{tool.app}` 没有找到连接的帐户; "
+                f"运行 `composio add {tool.app}` 来解决这个问题"
             )
 
     @classmethod
@@ -44,7 +44,7 @@ class ComposioTool(BaseTool):
         action: t.Any,
         **kwargs: t.Any,
     ) -> te.Self:
-        """Wrap a composio tool as crewAI tool."""
+        """将 composio 工具包装为 crewAI 工具。"""
 
         from composio import Action, ComposioToolSet
         from composio.constants import DEFAULT_ENTITY_ID
@@ -65,7 +65,7 @@ class ComposioTool(BaseTool):
         entity_id = kwargs.pop("entity_id", DEFAULT_ENTITY_ID)
 
         def function(**kwargs: t.Any) -> t.Dict:
-            """Wrapper function for composio action."""
+            """Composio 操作的包装函数。"""
             return toolset.execute_action(
                 action=Action(schema["name"]),
                 params=kwargs,
@@ -95,16 +95,16 @@ class ComposioTool(BaseTool):
         use_case: t.Optional[str] = None,
         **kwargs: t.Any,
     ) -> t.List[te.Self]:
-        """Create toolset from an app."""
+        """从应用程序创建工具集。"""
         if len(apps) == 0:
-            raise ValueError("You need to provide at least one app name")
+            raise ValueError("您需要至少提供一个应用程序名称")
 
         if use_case is None and tags is None:
-            raise ValueError("Both `use_case` and `tags` cannot be `None`")
+            raise ValueError("`use_case` 和 `tags` 不能同时为 `None`")
 
         if use_case is not None and tags is not None:
             raise ValueError(
-                "Cannot use both `use_case` and `tags` to filter the actions"
+                "不能同时使用 `use_case` 和 `tags` 来过滤操作"
             )
 
         from composio import ComposioToolSet

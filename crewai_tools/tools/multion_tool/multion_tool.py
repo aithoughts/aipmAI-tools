@@ -1,4 +1,4 @@
-"""Multion tool spec."""
+"""Multion 工具规范。"""
 
 from typing import Any, Optional
 
@@ -6,11 +6,11 @@ from crewai_tools.tools.base_tool import BaseTool
 
 
 class MultiOnTool(BaseTool):
-    """Tool to wrap MultiOn Browse Capabilities."""
+    """用于封装 MultiOn 浏览功能的工具。"""
 
-    name: str = "Multion Browse Tool"
-    description: str = """Multion gives the ability for LLMs to control web browsers using natural language instructions.
-            If the status is 'CONTINUE', reissue the same instruction to continue execution
+    name: str = "Multion 浏览工具"
+    description: str = """Multion 使大型语言模型能够使用自然语言指令控制网络浏览器。
+            如果状态为“继续”，则重新发出相同的指令以继续执行
         """
     multion: Optional[Any] = None
     session_id: Optional[str] = None
@@ -29,7 +29,7 @@ class MultiOnTool(BaseTool):
             from multion.client import MultiOn  # type: ignore
         except ImportError:
             raise ImportError(
-                "`multion` package not found, please run `pip install multion`"
+                "找不到 `multion` 包，请运行 `pip install multion`"
             )
         self.session_id = None
         self.local = local
@@ -43,13 +43,13 @@ class MultiOnTool(BaseTool):
         **kwargs: Any,
     ) -> str:
         """
-        Run the Multion client with the given command.
+        使用给定的命令运行 Multion 客户端。
 
-        Args:
-            cmd (str): The detailed and specific natural language instructrion for web browsing
+        参数：
+            cmd (str)：用于网页浏览的详细且具体的自然语言指令
 
-            *args (Any): Additional arguments to pass to the Multion client
-            **kwargs (Any): Additional keyword arguments to pass to the Multion client
+            *args (Any)：要传递给 Multion 客户端的附加参数
+            **kwargs (Any)：要传递给 Multion 客户端的附加关键字参数
         """
 
         browse = self.multion.browse(
@@ -62,4 +62,4 @@ class MultiOnTool(BaseTool):
         )
         self.session_id = browse.session_id
 
-        return browse.message + "\n\n STATUS: " + browse.status
+        return browse.message + "\n\n 状态：" + browse.status

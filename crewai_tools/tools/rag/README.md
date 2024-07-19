@@ -1,27 +1,27 @@
-# RagTool: A Dynamic Knowledge Base Tool
+# RagTool：动态知识库工具
 
-RagTool is designed to answer questions by leveraging the power of RAG by leveraging (EmbedChain). It integrates seamlessly with the CrewAI ecosystem, offering a versatile and powerful solution for information retrieval.
+RagTool 旨在通过利用 RAG 的强大功能（利用 EmbedChain）来回答问题。它与 CrewAI 生态系统无缝集成，为信息检索提供了一种通用且强大的解决方案。
 
-## **Overview**
+## **概述**
 
-RagTool enables users to dynamically query a knowledge base, making it an ideal tool for applications requiring access to a vast array of information. Its flexible design allows for integration with various data sources, including files, directories, web pages, yoututbe videos and custom configurations.
+RagTool 使用户能够动态查询知识库，使其成为需要访问大量信息的应用程序的理想工具。其灵活的设计允许与各种数据源集成，包括文件、目录、网页、YouTube 视频和自定义配置。
 
-## **Usage**
+## **用法**
 
-RagTool can be instantiated with data from different sources, including:
+可以使用来自不同来源的数据实例化 RagTool，包括：
 
-- 📰 PDF file
-- 📊 CSV file
-- 📃 JSON file
-- 📝 Text
-- 📁 Directory/ Folder
-- 🌐 HTML Web page
-- 📽️ Youtube Channel
-- 📺 Youtube Video
-- 📚 Docs website
-- 📝 MDX file
-- 📄 DOCX file
-- 🧾 XML file
+- 📰 PDF 文件
+- 📊 CSV 文件
+- 📃 JSON 文件
+- 📝 文本文件
+- 📁 目录/文件夹
+- 🌐 HTML 网页
+- 📽️ YouTube 频道
+- 📺 YouTube 视频
+- 📚 文档网站
+- 📝 MDX 文件
+- 📄 DOCX 文件
+- 🧾 XML 文件
 - 📬 Gmail
 - 📝 Github
 - 🐘 Postgres
@@ -32,30 +32,30 @@ RagTool can be instantiated with data from different sources, including:
 - 📝 Substack
 - 🐝 Beehiiv
 - 💾 Dropbox
-- 🖼️ Image
-- ⚙️ Custom
+- 🖼️ 图像
+- ⚙️ 自定义
 
-#### **Creating an Instance**
+#### **创建实例**
 
 ```python
 from crewai_tools.tools.rag_tool import RagTool
 
-# Example: Loading from a file
+# 示例：从文件加载
 rag_tool = RagTool().from_file('path/to/your/file.txt')
 
-# Example: Loading from a directory
+# 示例：从目录加载
 rag_tool = RagTool().from_directory('path/to/your/directory')
 
-# Example: Loading from a web page
+# 示例：从网页加载
 rag_tool = RagTool().from_web_page('https://example.com')
 ```
 
-## **Contribution**
+## **贡献**
 
-Contributions to RagTool and the broader CrewAI tools ecosystem are welcome. To contribute, please follow the standard GitHub workflow for forking the repository, making changes, and submitting a pull request.
+欢迎为 RagTool 和更广泛的 CrewAI 工具生态系统做出贡献。要做出贡献，请遵循标准的 GitHub 工作流程，即 fork 存储库、进行更改并提交拉取请求。
 
-## **License**
+## **许可证**
 
-RagTool is open-source and available under the MIT license.
+RagTool 是开源的，可在 MIT 许可证下使用。
 
-Thank you for considering RagTool for your knowledge base needs. Your contributions and feedback are invaluable to making RagTool even better.
+感谢您考虑将 RagTool 用于您的知识库需求。您的贡献和反馈对于使 RagTool 变得更好至关重要。

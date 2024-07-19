@@ -1,24 +1,28 @@
-# ScrapeWebsiteTool
+## ScrapeWebsiteTool
 
-## Description
-A tool designed to extract and read the content of a specified website. It is capable of handling various types of web pages by making HTTP requests and parsing the received HTML content. This tool can be particularly useful for web scraping tasks, data collection, or extracting specific information from websites.
+## 描述
 
-## Installation
-Install the crewai_tools package
+此工具旨在提取和读取指定网站的内容。它能够通过发出 HTTP 请求并解析接收到的 HTML 内容来处理各种类型的网页。此工具对于网页抓取任务、数据收集或从网站提取特定信息特别有用。
+
+## 安装
+
+安装 crewai_tools 软件包
 ```shell
 pip install 'crewai[tools]'
 ```
 
-## Example
+## 示例
+
 ```python
 from crewai_tools import ScrapeWebsiteTool
 
-# To enable scrapping any website it finds during it's execution
+# 启用抓取其执行期间找到的任何网站
 tool = ScrapeWebsiteTool()
 
-# Initialize the tool with the website URL, so the agent can only scrap the content of the specified website
+# 使用网站 URL 初始化工具，以便代理只能抓取指定网站的内容
 tool = ScrapeWebsiteTool(website_url='https://www.example.com')
 ```
 
-## Arguments
-- `website_url` : Mandatory website URL to read the file. This is the primary input for the tool, specifying which website's content should be scraped and read.
+## 参数
+
+- `website_url`：要读取文件的网站 URL（必填）。这是该工具的主要输入，指定应抓取和读取哪个网站的内容。

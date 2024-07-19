@@ -4,21 +4,21 @@ from ..base_tool import BaseTool
 
 
 class FixedFileReadToolSchema(BaseModel):
-    """Input for FileReadTool."""
+    """FileReadTool 的输入"""
     pass
 
 
 class FileReadToolSchema(FixedFileReadToolSchema):
-    """Input for FileReadTool."""
+    """FileReadTool 的输入"""
     file_path: str = Field(
         ...,
-        description="Mandatory file full path to read the file"
+        description="要读取的文件的完整路径（必填）"
     )
 
 
 class FileReadTool(BaseTool):
-    name: str = "Read a file's content"
-    description: str = "A tool that can be used to read a file's content."
+    name: str = "读取文件内容"
+    description: str = "一个可以用来读取文件内容的工具。"
     args_schema: Type[BaseModel] = FileReadToolSchema
     file_path: Optional[str] = None
 
@@ -30,7 +30,7 @@ class FileReadTool(BaseTool):
         super().__init__(**kwargs)
         if file_path is not None:
             self.file_path = file_path
-            self.description = f"A tool that can be used to read {file_path}'s content."
+            self.description = f"一个可以用来读取 {file_path} 内容的工具。"
             self.args_schema = FixedFileReadToolSchema
             self._generate_description()
 
@@ -43,4 +43,4 @@ class FileReadTool(BaseTool):
             with open(file_path, 'r') as file:
                 return file.read()
         except Exception as e:
-            return f"Fail to read the file {file_path}. Error: {e}"
+            return f"读取文件 {file_path} 失败。错误：{e}"

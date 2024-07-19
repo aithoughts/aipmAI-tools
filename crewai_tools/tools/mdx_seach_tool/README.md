@@ -1,42 +1,46 @@
-# MDXSearchTool
+## MDXSearchTool
 
-## Description
-The MDX Search Tool, a key component of the `crewai_tools` package, is designed for advanced market data extraction, offering invaluable support to researchers and analysts requiring immediate market insights in the AI sector. With its ability to interface with various data sources and tools, it streamlines the process of acquiring, reading, and organizing market data efficiently.
+## 描述
 
-## Installation
-To utilize the MDX Search Tool, ensure the `crewai_tools` package is installed. If not already present, install it using the following command:
+MDX 搜索工具是 `crewai_tools` 软件包的关键组件，专为高级市场数据提取而设计，为需要即时获取人工智能领域市场洞察力的研究人员和分析师提供宝贵支持。它能够与各种数据源和工具交互，从而简化了高效获取、读取和组织市场数据的流程。
+
+## 安装
+
+要使用 MDX 搜索工具，请确保已安装 `crewai_tools` 软件包。如果尚未安装，请使用以下命令进行安装：
 
 ```shell
 pip install 'crewai[tools]'
 ```
 
-## Example
-Configuring and using the MDX Search Tool involves setting up environment variables and utilizing the tool within a crewAI project for market research. Here's a simple example:
+## 示例
+
+配置和使用 MDX 搜索工具涉及设置环境变量并在 crewAI 项目中使用该工具进行市场调查。以下是一个简单的示例：
 
 ```python
 from crewai_tools import MDXSearchTool
 
-# Initialize the tool so the agent can search any MDX content if it learns about during its execution
+# 初始化工具，以便代理可以在执行过程中搜索任何了解到的 MDX 内容
 tool = MDXSearchTool()
 
-# OR
+# 或
 
-# Initialize the tool with a specific MDX file path for exclusive search within that document
+# 使用特定的 MDX 文件路径初始化工具，以便仅在该文档中进行搜索
 tool = MDXSearchTool(mdx='path/to/your/document.mdx')
 ```
 
-## Arguments
-- mdx: **Optional** The MDX path for the search. Can be provided at initialization
+## 参数
 
-## Custom model and embeddings
+- mdx：**可选** 用于搜索的 MDX 路径。可以在初始化时提供
 
-By default, the tool uses OpenAI for both embeddings and summarization. To customize the model, you can use a config dictionary as follows:
+## 自定义模型和嵌入
+
+默认情况下，该工具使用 OpenAI 进行嵌入和摘要。要自定义模型，可以使用如下所示的配置字典：
 
 ```python
 tool = MDXSearchTool(
     config=dict(
         llm=dict(
-            provider="ollama", # or google, openai, anthropic, llama2, ...
+            provider="ollama", # 或 google, openai, anthropic, llama2, ...
             config=dict(
                 model="llama2",
                 # temperature=0.5,

@@ -7,24 +7,24 @@ from ..rag.rag_tool import RagTool
 
 
 class FixedCSVSearchToolSchema(BaseModel):
-    """Input for CSVSearchTool."""
+    """CSVSearchTool 的输入"""
 
     search_query: str = Field(
         ...,
-        description="Mandatory search query you want to use to search the CSV's content",
+        description="您想用于搜索 CSV 内容的必需搜索查询",
     )
 
 
 class CSVSearchToolSchema(FixedCSVSearchToolSchema):
-    """Input for CSVSearchTool."""
+    """CSVSearchTool 的输入"""
 
-    csv: str = Field(..., description="Mandatory csv path you want to search")
+    csv: str = Field(..., description="您想搜索的必需 CSV 路径")
 
 
 class CSVSearchTool(RagTool):
-    name: str = "Search a CSV's content"
+    name: str = "搜索 CSV 内容"
     description: str = (
-        "A tool that can be used to semantic search a query from a CSV's content."
+        "一个可以用来从 CSV 内容中语义搜索查询的工具。"
     )
     args_schema: Type[BaseModel] = CSVSearchToolSchema
 
@@ -32,7 +32,7 @@ class CSVSearchTool(RagTool):
         super().__init__(**kwargs)
         if csv is not None:
             self.add(csv)
-            self.description = f"A tool that can be used to semantic search a query the {csv} CSV's content."
+            self.description = f"一个可以用来语义搜索 {csv} CSV 内容的查询工具。"
             self.args_schema = FixedCSVSearchToolSchema
             self._generate_description()
 
@@ -58,3 +58,4 @@ class CSVSearchTool(RagTool):
         **kwargs: Any,
     ) -> Any:
         return super()._run(query=search_query, **kwargs)
+    

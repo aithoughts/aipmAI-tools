@@ -1,33 +1,37 @@
-# SeleniumScrapingTool
+## SeleniumScrapingTool
 
-## Description
-This tool is designed for efficient web scraping, enabling users to extract content from web pages. It supports targeted scraping by allowing the specification of a CSS selector for desired elements. The flexibility of the tool enables it to be used on any website URL provided by the user, making it a versatile tool for various web scraping needs.
+## 描述
 
-## Installation
-Install the crewai_tools package
+此工具专为高效的网页抓取而设计，使用户能够从网页中提取内容。它通过允许指定所需元素的 CSS 选择器来支持目标抓取。该工具的灵活性使其能够用于用户提供的任何网站 URL，使其成为满足各种网页抓取需求的多功能工具。
+
+## 安装
+
+安装 crewai_tools 软件包
 ```
 pip install 'crewai[tools]'
 ```
 
-## Example
+## 示例
+
 ```python
 from crewai_tools import SeleniumScrapingTool
 
-# Example 1: Scrape any website it finds during its execution
+# 示例 1：抓取其执行期间找到的任何网站
 tool = SeleniumScrapingTool()
 
-# Example 2: Scrape the entire webpage
+# 示例 2：抓取整个网页
 tool = SeleniumScrapingTool(website_url='https://example.com')
 
-# Example 3: Scrape a specific CSS element from the webpage
+# 示例 3：从网页中抓取特定的 CSS 元素
 tool = SeleniumScrapingTool(website_url='https://example.com', css_element='.main-content')
 
-# Example 4: Scrape using optional parameters for customized scraping
+# 示例 4：使用可选参数进行自定义抓取
 tool = SeleniumScrapingTool(website_url='https://example.com', css_element='.main-content', cookie={'name': 'user', 'value': 'John Doe'})
 ```
 
-## Arguments
-- `website_url`: Mandatory. The URL of the website to scrape.
-- `css_element`: Mandatory. The CSS selector for a specific element to scrape from the website.
-- `cookie`: Optional. A dictionary containing cookie information. This parameter allows the tool to simulate a session with cookie information, providing access to content that may be restricted to logged-in users.
-- `wait_time`: Optional. The number of seconds the tool waits after loading the website and after setting a cookie, before scraping the content. This allows for dynamic content to load properly.
+## 参数
+
+- `website_url`：必填。要抓取的网站的 URL。
+- `css_element`：必填。要从网站抓取的特定元素的 CSS 选择器。
+- `cookie`：可选。包含 Cookie 信息的字典。此参数允许工具使用 Cookie 信息模拟会话，从而提供对可能仅限登录用户访问的内容的访问权限。
+- `wait_time`：可选。工具在加载网站和设置 Cookie 后，在抓取内容之前等待的秒数。这允许动态内容正确加载。

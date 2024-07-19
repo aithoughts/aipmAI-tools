@@ -7,13 +7,13 @@ from crewai_tools.tools.base_tool import BaseTool
 
 
 class SerplyWebSearchToolSchema(BaseModel):
-    """Input for Serply Web Search."""
-    search_query: str = Field(..., description="Mandatory search query you want to use to Google search")
+    """Serply 网络搜索的输入。"""
+    search_query: str = Field(..., description="要用于 Google 搜索的必填搜索查询")
 
 
 class SerplyWebSearchTool(BaseTool):
-    name: str = "Google Search"
-    description: str = "A tool to perform Google search with a search_query."
+    name: str = "Google 搜索"
+    description: str = "使用 search_query 执行 Google 搜索的工具。"
     args_schema: Type[BaseModel] = SerplyWebSearchToolSchema
     search_url: str = "https://api.serply.io/v1/search/"
     hl: Optional[str] = "us"
@@ -32,13 +32,13 @@ class SerplyWebSearchTool(BaseTool):
             **kwargs
     ):
         """
-            param: query (str): The query to search for
-            param: hl (str): host Language code to display results in
-                (reference https://developers.google.com/custom-search/docs/xml_results?hl=en#wsInterfaceLanguages)
-            param: limit (int): The maximum number of results to return [10-100, defaults to 10]
-            param: device_type (str): desktop/mobile results (defaults to desktop)
-            proxy_location: (str): Where to perform the search, specifically for local/regional results.
-                 ['US', 'CA', 'IE', 'GB', 'FR', 'DE', 'SE', 'IN', 'JP', 'KR', 'SG', 'AU', 'BR'] (defaults to US)
+            param: query (str): 要搜索的查询
+            param: hl (str): 用于显示结果的主机语言代码
+                （参考 https://developers.google.com/custom-search/docs/xml_results?hl=en#wsInterfaceLanguages）
+            param: limit (int): 要返回的最大结果数 [10-100，默认为 10]
+            param: device_type (str): 桌面/移动设备结果（默认为桌面）
+            proxy_location: (str): 在哪里执行搜索，特别是针对本地/区域结果。
+                 ['US', 'CA', 'IE', 'GB', 'FR', 'DE', 'SE', 'IN', 'JP', 'KR', 'SG', 'AU', 'BR']（默认为美国）
         """
         super().__init__(**kwargs)
 
@@ -46,7 +46,7 @@ class SerplyWebSearchTool(BaseTool):
         self.device_type = device_type
         self.proxy_location = proxy_location
 
-        # build query parameters
+        # 构建查询参数
         self.query_payload = {
             "num": limit,
             "gl": proxy_location.upper(),
@@ -68,7 +68,7 @@ class SerplyWebSearchTool(BaseTool):
         elif "search_query" in kwargs:
             self.query_payload["q"] = kwargs["search_query"]
 
-        # build the url
+        # 构建 URL
         url = f"{self.search_url}{urlencode(self.query_payload)}"
 
         response = requests.request("GET", url, headers=self.headers)
@@ -79,15 +79,15 @@ class SerplyWebSearchTool(BaseTool):
             for result in results:
                 try:
                     string.append('\n'.join([
-                        f"Title: {result['title']}",
-                        f"Link: {result['link']}",
-                        f"Description: {result['description'].strip()}",
+                        f"标题：{result['title']}",
+                        f"链接：{result['link']}",
+                        f"描述：{result['description'].strip()}",
                         "---"
                     ]))
                 except KeyError:
                     continue
 
             content = '\n'.join(string)
-            return f"\nSearch results: {content}\n"
+            return f"\n搜索结果：{content}\n"
         else:
             return results

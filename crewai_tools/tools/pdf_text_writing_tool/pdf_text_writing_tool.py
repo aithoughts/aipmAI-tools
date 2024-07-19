@@ -5,21 +5,21 @@ from pathlib import Path
 
 
 class PDFTextWritingToolSchema(BaseModel):
-    """Input schema for PDFTextWritingTool."""
-    pdf_path: str = Field(..., description="Path to the PDF file to modify")
-    text: str = Field(..., description="Text to add to the PDF")
-    position: tuple = Field(..., description="Tuple of (x, y) coordinates for text placement")
-    font_size: int = Field(default=12, description="Font size of the text")
-    font_color: str = Field(default="0 0 0 rg", description="RGB color code for the text")
-    font_name: Optional[str] = Field(default="F1", description="Font name for standard fonts")
-    font_file: Optional[str] = Field(None, description="Path to a .ttf font file for custom font usage")
-    page_number: int = Field(default=0, description="Page number to add text to")
+    """PDFTextWritingTool 的输入模式。"""
+    pdf_path: str = Field(..., description="要修改的 PDF 文件的路径")
+    text: str = Field(..., description="要添加到 PDF 的文本")
+    position: tuple = Field(..., description="文本放置的 (x, y) 坐标元组")
+    font_size: int = Field(default=12, description="文本的字体大小")
+    font_color: str = Field(default="0 0 0 rg", description="文本的 RGB 颜色代码")
+    font_name: Optional[str] = Field(default="F1", description="标准字体的字体名称")
+    font_file: Optional[str] = Field(None, description="用于自定义字体的 .ttf 字体文件的路径")
+    page_number: int = Field(default=0, description="要添加文本的页码")
 
 
 class PDFTextWritingTool(RagTool):
-    """A tool to add text to specific positions in a PDF, with custom font support."""
-    name: str = "PDF Text Writing Tool"
-    description: str = "A tool that can write text to a specific position in a PDF document, with optional custom font embedding."
+    """一个用于在 PDF 中的特定位置添加文本的工具，支持自定义字体。"""
+    name: str = "PDF 文本写入工具"
+    description: str = "一个可以在 PDF 文档的特定位置写入文本的工具，可以选择嵌入自定义字体。"
     args_schema: Type[BaseModel] = PDFTextWritingToolSchema
 
     def run(self, pdf_path: str, text: str, position: tuple, font_size: int, font_color: str,
@@ -28,38 +28,38 @@ class PDFTextWritingTool(RagTool):
         writer = PdfWriter()
 
         if page_number >= len(reader.pages):
-            return "Page number out of range."
+            return "页码超出范围。"
 
         page: PageObject = reader.pages[page_number]
         content = ContentStream(page["/Contents"].data, reader)
 
         if font_file:
-            # Check if the font file exists
+            # 检查字体文件是否存在
             if not Path(font_file).exists():
-                return "Font file does not exist."
+                return "字体文件不存在。"
 
-            # Embed the custom font
+            # 嵌入自定义字体
             font_name = self.embed_font(writer, font_file)
 
-        # Prepare text operation with the custom or standard font
+        # 使用自定义或标准字体准备文本操作
         x_position, y_position = position
         text_operation = f"BT /{font_name} {font_size} Tf {x_position} {y_position} Td ({text}) Tj ET"
-        content.operations.append([font_color])  # Set color
-        content.operations.append([text_operation])  # Add text
+        content.operations.append([font_color])  # 设置颜色
+        content.operations.append([text_operation])  # 添加文本
 
-        # Replace old content with new content
+        # 用新内容替换旧内容
         page[NameObject("/Contents")] = content
         writer.add_page(page)
 
-        # Save the new PDF
+        # 保存新的 PDF
         output_pdf_path = "modified_output.pdf"
         with open(output_pdf_path, "wb") as out_file:
             writer.write(out_file)
 
-        return f"Text added to {output_pdf_path} successfully."
+        return f"文本已成功添加到 {output_pdf_path}。"
 
     def embed_font(self, writer: PdfWriter, font_file: str) -> str:
-        """Embeds a TTF font into the PDF and returns the font name."""
+        """将 TTF 字体嵌入 PDF 并返回字体名称。"""
         with open(font_file, "rb") as file:
             font = Font.true_type(file.read())
         font_ref = writer.add_object(font)

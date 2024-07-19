@@ -1,42 +1,42 @@
 # WebsiteSearchTool
 
-## Description
-This tool is specifically crafted for conducting semantic searches within the content of a particular website. Leveraging a Retrieval-Augmented Generation (RAG) model, it navigates through the information provided on a given URL. Users have the flexibility to either initiate a search across any website known or discovered during its usage or to concentrate the search on a predefined, specific website.
+## 描述
+此工具专门用于在特定网站的内容中进行语义搜索。它利用检索增强生成 (RAG) 模型，在给定 URL 提供的信息中进行导航。用户可以灵活地在使用期间已知或发现的任何网站上启动搜索，或者将搜索集中在预定义的特定网站上。
 
-## Installation
-Install the crewai_tools package by executing the following command in your terminal:
+## 安装
+在终端中执行以下命令安装 crewai_tools 包：
 
 ```shell
 pip install 'crewai[tools]'
 ```
 
-## Example
-To utilize the WebsiteSearchTool for different use cases, follow these examples:
+## 示例
+要将 WebsiteSearchTool 用于不同的用例，请遵循以下示例：
 
 ```python
 from crewai_tools import WebsiteSearchTool
 
-# To enable the tool to search any website the agent comes across or learns about during its operation
+# 使工具能够搜索代理在其操作期间遇到或了解的任何网站
 tool = WebsiteSearchTool()
 
-# OR
+# 或者
 
-# To restrict the tool to only search within the content of a specific website.
+# 将工具限制为仅在特定网站的内容中搜索。
 tool = WebsiteSearchTool(website='https://example.com')
 ```
 
-## Arguments
-- `website` : An optional argument that specifies the valid website URL to perform the search on. This becomes necessary if the tool is initialized without a specific website. In the `WebsiteSearchToolSchema`, this argument is mandatory. However, in the `FixedWebsiteSearchToolSchema`, it becomes optional if a website is provided during the tool's initialization, as it will then only search within the predefined website's content.
+## 参数
+- `website` ：一个可选参数，用于指定要在其上执行搜索的有效网站 URL。如果工具在初始化时未指定特定网站，则此参数 becomes necessary。在 `WebsiteSearchToolSchema` 中，此参数是必需的。但是，在 `FixedWebsiteSearchToolSchema` 中，如果在工具初始化期间提供了网站，则此参数 becomes optional，因为它将仅在预定义网站的内容中进行搜索。
 
-## Custom model and embeddings
+## 自定义模型和嵌入
 
-By default, the tool uses OpenAI for both embeddings and summarization. To customize the model, you can use a config dictionary as follows:
+默认情况下，该工具使用 OpenAI 进行嵌入和摘要。要自定义模型，您可以使用如下配置字典：
 
 ```python
 tool = WebsiteSearchTool(
     config=dict(
         llm=dict(
-            provider="ollama", # or google, openai, anthropic, llama2, ...
+            provider="ollama", # 或 google, openai, anthropic, llama2, ...
             config=dict(
                 model="llama2",
                 # temperature=0.5,

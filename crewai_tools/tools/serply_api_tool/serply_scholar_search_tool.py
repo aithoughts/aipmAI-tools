@@ -7,13 +7,13 @@ from crewai_tools.tools.base_tool import BaseTool
 
 
 class SerplyScholarSearchToolSchema(BaseModel):
-    """Input for Serply Scholar Search."""
-    search_query: str = Field(..., description="Mandatory search query you want to use to fetch scholarly literature")
+    """Serply 学术搜索的输入。"""
+    search_query: str = Field(..., description="要用于获取学术文献的必填搜索查询")
 
 
 class SerplyScholarSearchTool(BaseTool):
-    name: str = "Scholar Search"
-    description: str = "A tool to perform News article search with a search_query."
+    name: str = "学术搜索"
+    description: str = "使用 search_query 执行学术文献搜索的工具。"
     args_schema: Type[BaseModel] = SerplyScholarSearchToolSchema
     search_url: str = "https://api.serply.io/v1/scholar/"
     hl: Optional[str] = "us"
@@ -27,10 +27,10 @@ class SerplyScholarSearchTool(BaseTool):
             **kwargs
     ):
         """
-            param: hl (str): host Language code to display results in
-                (reference https://developers.google.com/custom-search/docs/xml_results?hl=en#wsInterfaceLanguages)
-            proxy_location: (str): Where to get news, specifically for a specific country results.
-                 ['US', 'CA', 'IE', 'GB', 'FR', 'DE', 'SE', 'IN', 'JP', 'KR', 'SG', 'AU', 'BR'] (defaults to US)
+            param: hl (str): 用于显示结果的主机语言代码
+                （参考 https://developers.google.com/custom-search/docs/xml_results?hl=en#wsInterfaceLanguages）
+            proxy_location: (str): 指定搜索的代理位置，特别是针对特定国家/地区的结果。
+                 ['US', 'CA', 'IE', 'GB', 'FR', 'DE', 'SE', 'IN', 'JP', 'KR', 'SG', 'AU', 'BR']（默认为美国）
         """
         super().__init__(**kwargs)
         self.hl = hl
@@ -54,7 +54,7 @@ class SerplyScholarSearchTool(BaseTool):
         elif "search_query" in kwargs:
             query_payload["q"] = kwargs["search_query"]
 
-        # build the url
+        # 构建 URL
         url = f"{self.search_url}{urlencode(query_payload)}"
 
         response = requests.request("GET", url, headers=self.headers)
@@ -72,15 +72,15 @@ class SerplyScholarSearchTool(BaseTool):
                     link = article['link']
                 authors = [author['name'] for author in article['author']['authors']]
                 string.append('\n'.join([
-                    f"Title: {article['title']}",
-                    f"Link: {link}",
-                    f"Description: {article['description']}",
-                    f"Cite: {article['cite']}",
-                    f"Authors: {', '.join(authors)}",
+                    f"标题：{article['title']}",
+                    f"链接：{link}",
+                    f"描述：{article['description']}",
+                    f"引用：{article['cite']}",
+                    f"作者：{', '.join(authors)}",
                     "---"
                 ]))
             except KeyError:
                 continue
 
         content = '\n'.join(string)
-        return f"\nSearch results: {content}\n"
+        return f"\n搜索结果：{content}\n"

@@ -7,24 +7,24 @@ from ..rag.rag_tool import RagTool
 
 
 class FixedXMLSearchToolSchema(BaseModel):
-    """Input for XMLSearchTool."""
+    """XMLSearchTool 的输入"""
 
     search_query: str = Field(
         ...,
-        description="Mandatory search query you want to use to search the XML's content",
+        description="用于搜索 XML 内容的必需搜索查询",
     )
 
 
 class XMLSearchToolSchema(FixedXMLSearchToolSchema):
-    """Input for XMLSearchTool."""
+    """XMLSearchTool 的输入"""
 
-    xml: str = Field(..., description="Mandatory xml path you want to search")
+    xml: str = Field(..., description="要搜索的 XML 文件的必需路径")
 
 
 class XMLSearchTool(RagTool):
-    name: str = "Search a XML's content"
+    name: str = "搜索 XML 内容"
     description: str = (
-        "A tool that can be used to semantic search a query from a XML's content."
+        "一个可以用来从 XML 内容中进行语义搜索的工具。"
     )
     args_schema: Type[BaseModel] = XMLSearchToolSchema
 
@@ -32,7 +32,7 @@ class XMLSearchTool(RagTool):
         super().__init__(**kwargs)
         if xml is not None:
             self.add(xml)
-            self.description = f"A tool that can be used to semantic search a query the {xml} XML's content."
+            self.description = f"一个可以用来在 {xml} XML 内容中进行语义搜索的工具。"
             self.args_schema = FixedXMLSearchToolSchema
             self._generate_description()
 

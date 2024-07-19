@@ -1,87 +1,92 @@
-# Serply API Documentation
+# Serply API 文档
 
-## Description
-This tool is designed to perform a web/news/scholar search for a specified query from a text's content across the internet. It utilizes the [Serply.io](https://serply.io) API to fetch and display the most relevant search results based on the query provided by the user.
+## 描述
 
-## Installation
+此工具旨在根据用户提供的查询，从互联网上的文本内容中执行网络/新闻/学术搜索。它利用 [Serply.io](https://serply.io) API 获取并显示与查询最相关的搜索结果。
 
-To incorporate this tool into your project, follow the installation instructions below:
+## 安装
+
+要将此工具整合到您的项目中，请按照以下安装说明进行操作：
+
 ```shell
 pip install 'crewai[tools]'
 ```
 
-## Examples
+## 示例
 
-## Web Search
-The following example demonstrates how to initialize the tool and execute a search the web with a given query:
+## 网络搜索
+
+以下示例演示了如何初始化该工具并使用给定的查询执行网络搜索：
 
 ```python
 from crewai_tools import SerplyWebSearchTool
 
-# Initialize the tool for internet searching capabilities
+# 初始化该工具以获得互联网搜索功能
 tool = SerplyWebSearchTool()
 
-# increase search limits to 100 results
+# 将搜索限制增加到 100 个结果
 tool = SerplyWebSearchTool(limit=100)
 
-
-# change results language (fr - French)
+# 更改结果语言（fr - 法语）
 tool = SerplyWebSearchTool(hl="fr")
 ```
 
-## News Search
-The following example demonstrates how to initialize the tool and execute a search news with a given query:
+## 新闻搜索
+
+以下示例演示了如何初始化该工具并使用给定的查询执行新闻搜索：
 
 ```python
 from crewai_tools import SerplyNewsSearchTool
 
-# Initialize the tool for internet searching capabilities
+# 初始化该工具以获得互联网搜索功能
 tool = SerplyNewsSearchTool()
 
-# change country news (JP - Japan)
+# 更改国家/地区新闻（JP - 日本）
 tool = SerplyNewsSearchTool(proxy_location="JP")
 ```
 
-## Scholar Search
-The following example demonstrates how to initialize the tool and execute a search scholar articles a given query:
+## 学术搜索
+
+以下示例演示了如何初始化该工具并使用给定的查询执行学术文章搜索：
 
 ```python
 from crewai_tools import SerplyScholarSearchTool
 
-# Initialize the tool for internet searching capabilities
+# 初始化该工具以获得互联网搜索功能
 tool = SerplyScholarSearchTool()
 
-# change country news (GB - Great Britain)
+# 更改国家/地区新闻（GB - 英国）
 tool = SerplyScholarSearchTool(proxy_location="GB")
 ```
 
-## Job Search
-The following example demonstrates how to initialize the tool and searching for jobs in the USA:
+## 招聘搜索
+
+以下示例演示了如何初始化该工具并在美国搜索招聘信息：
 
 ```python
 from crewai_tools import SerplyJobSearchTool
 
-# Initialize the tool for internet searching capabilities
+# 初始化该工具以获得互联网搜索功能
 tool = SerplyJobSearchTool()
 ```
 
+## 网页转 Markdown
 
-## Web Page To Markdown
-The following example demonstrates how to initialize the tool and fetch a web page and convert it to markdown:
+以下示例演示了如何初始化该工具并获取网页并将其转换为 Markdown：
 
 ```python
 from crewai_tools import SerplyWebpageToMarkdownTool
 
-# Initialize the tool for internet searching capabilities
+# 初始化该工具以获得互联网搜索功能
 tool = SerplyWebpageToMarkdownTool()
 
-# change country make request from (DE - Germany)
+# 更改发出请求的国家/地区（DE - 德国）
 tool = SerplyWebpageToMarkdownTool(proxy_location="DE")
 ```
 
-## Combining Multiple Tools
+## 组合多个工具
 
-The following example demonstrates performing a Google search to find relevant articles. Then, convert those articles to markdown format for easier extraction of key points.
+以下示例演示了执行 Google 搜索以查找相关文章。然后，将这些文章转换为 Markdown 格式，以便更轻松地提取关键点。
 
 ```python
 from crewai import Agent
@@ -90,28 +95,30 @@ from crewai_tools import SerplyWebSearchTool, SerplyWebpageToMarkdownTool
 search_tool = SerplyWebSearchTool()
 convert_to_markdown = SerplyWebpageToMarkdownTool()
 
-# Creating a senior researcher agent with memory and verbose mode
+# 创建具有记忆和详细模式的高级研究员代理
 researcher = Agent(
-  role='Senior Researcher',
-  goal='Uncover groundbreaking technologies in {topic}',
+  role='高级研究员',
+  goal='发现{topic}中的突破性技术',
   verbose=True,
   memory=True,
   backstory=(
-    "Driven by curiosity, you're at the forefront of"
-    "innovation, eager to explore and share knowledge that could change"
-    "the world."
+    "在好奇心的驱使下，您处于"
+    "创新的最前沿，渴望探索和分享可能改变"
+    "世界的知识。"
   ),
   tools=[search_tool, convert_to_markdown],
   allow_delegation=True
 )
 ```
 
-## Steps to Get Started
-To effectively use the `SerplyApiTool`, follow these steps:
+## 入门步骤
 
-1. **Package Installation**: Confirm that the `crewai[tools]` package is installed in your Python environment.
-2. **API Key Acquisition**: Acquire a `serper.dev` API key by registering for a free account at [Serply.io](https://serply.io).
-3. **Environment Configuration**: Store your obtained API key in an environment variable named `SERPLY_API_KEY` to facilitate its use by the tool.
+要有效使用 `SerplyApiTool`，请按照以下步骤操作：
 
-## Conclusion
-By integrating the `SerplyApiTool` into Python projects, users gain the ability to conduct real-time searches, relevant news across the internet directly from their applications. By adhering to the setup and usage guidelines provided, incorporating this tool into projects is streamlined and straightforward.
+1. **安装软件包**：确认您的 Python 环境中已安装 `crewai[tools]` 软件包。
+2. **获取 API 密钥**：通过在 [Serply.io](https://serply.io) 上注册免费帐户来获取 `serper.dev` API 密钥。
+3. **配置环境**：将您获得的 API 密钥存储在名为 `SERPLY_API_KEY` 的环境变量中，以便该工具使用。
+
+## 结论
+
+通过将 `SerplyApiTool` 集成到 Python 项目中，用户可以直接从其应用程序中进行实时搜索、获取相关的互联网新闻。通过遵循提供的设置和使用指南，可以简化并将此工具轻松整合到项目中。

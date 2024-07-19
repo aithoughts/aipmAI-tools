@@ -1,26 +1,28 @@
-# ScrapflyScrapeWebsiteTool
+## ScrapflyScrapeWebsiteTool
 
-## Description
-[ScrapFly](https://scrapfly.io/) is a web scraping API with headless browser capabilities, proxies, and anti-bot bypass. It allows for extracting web page data into accessible LLM markdown or text.
+## 描述
 
-## Setup and Installation
-1. **Install ScrapFly Python SDK**: Install `scrapfly-sdk` Python package is installed to use the ScrapFly Web Loader. Install it via pip with the following command:
+[ScrapFly](https://scrapfly.io/) 是一个网页抓取 API，具有无头浏览器功能、代理和反机器人绕过功能。它允许将网页数据提取为可访问的 LLM Markdown 或文本。
+
+## 设置和安装
+
+1. **安装 ScrapFly Python SDK**：安装 `scrapfly-sdk` Python 软件包以使用 ScrapFly Web Loader。使用以下命令通过 pip 安装：
 
    ```bash
    pip install scrapfly-sdk
    ```
 
-2. **API Key**: Register for free from [scrapfly.io/register](https://www.scrapfly.io/register/) to obtain your API key.
+2. **API 密钥**：从 [scrapfly.io/register](https://www.scrapfly.io/register/) 免费注册以获取您的 API 密钥。
 
-## Example Usage
+## 示例用法
 
-Utilize the ScrapflyScrapeWebsiteTool as follows to retrieve a web page data as text, markdown (LLM accissible) or HTML:
+使用 ScrapflyScrapeWebsiteTool 如下所示检索网页数据为文本、Markdown（LLM 可访问）或 HTML：
 
 ```python
 from crewai_tools import ScrapflyScrapeWebsiteTool
 
 tool = ScrapflyScrapeWebsiteTool(
-    api_key="Your ScrapFly API key"
+    api_key="您的 ScrapFly API 密钥"
 )
 
 result = tool._run(
@@ -30,22 +32,24 @@ result = tool._run(
 )
 ```
 
-## Additional Arguments
-The ScrapflyScrapeWebsiteTool also allows passigng ScrapeConfig object for customizing the scrape request. See the [API params documentation](https://scrapfly.io/docs/scrape-api/getting-started) for the full feature details and their API params:
+## 附加参数
+
+ScrapflyScrapeWebsiteTool 还允许传递 ScrapeConfig 对象以自定义抓取请求。有关完整功能详细信息及其 API 参数，请参阅 [API 参数文档](https://scrapfly.io/docs/scrape-api/getting-started)：
+
 ```python
 from crewai_tools import ScrapflyScrapeWebsiteTool
 
 tool = ScrapflyScrapeWebsiteTool(
-    api_key="Your ScrapFly API key"
+    api_key="您的 ScrapFly API 密钥"
 )
 
 scrapfly_scrape_config = {
-    "asp": True, # Bypass scraping blocking and solutions, like Cloudflare
-    "render_js": True, # Enable JavaScript rendering with a cloud headless browser
-    "proxy_pool": "public_residential_pool", # Select a proxy pool (datacenter or residnetial)
-    "country": "us", # Select a proxy location
-    "auto_scroll": True, # Auto scroll the page
-    "js": "" # Execute custom JavaScript code by the headless browser
+    "asp": True, # 绕过抓取阻止和解决方案，例如 Cloudflare
+    "render_js": True, # 使用云无头浏览器启用 JavaScript 渲染
+    "proxy_pool": "public_residential_pool", # 选择代理池（数据中心或住宅）
+    "country": "us", # 选择代理位置
+    "auto_scroll": True, # 自动滚动页面
+    "js": "" # 由无头浏览器执行自定义 JavaScript 代码
 }
 
 result = tool._run(

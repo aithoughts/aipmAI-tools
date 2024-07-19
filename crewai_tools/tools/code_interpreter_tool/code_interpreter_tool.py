@@ -8,22 +8,22 @@ from pydantic.v1 import BaseModel, Field
 
 
 class CodeInterpreterSchema(BaseModel):
-    """Input for CodeInterpreterTool."""
+    """CodeInterpreterTool 的输入"""
 
     code: str = Field(
         ...,
-        description="Python3 code used to be interpreted in the Docker container. ALWAYS PRINT the final result and the output of the code",
+        description="将在 Docker 容器中解释执行的 Python3 代码。始终打印最终结果和代码的输出",
     )
 
     libraries_used: List[str] = Field(
         ...,
-        description="List of libraries used in the code with proper installing names separated by commas. Example: numpy,pandas,beautifulsoup4",
+        description="代码中使用的库列表，使用正确的安装名称，并用逗号分隔。示例：numpy,pandas,beautifulsoup4",
     )
 
 
 class CodeInterpreterTool(BaseTool):
-    name: str = "Code Interpreter"
-    description: str = "Interprets Python3 code strings with a final print statement."
+    name: str = "代码解释器"
+    description: str = "解释带有最终打印语句的 Python3 代码字符串。"
     args_schema: Type[BaseModel] = CodeInterpreterSchema
     code: Optional[str] = None
 
@@ -34,7 +34,7 @@ class CodeInterpreterTool(BaseTool):
 
     def _verify_docker_image(self) -> None:
         """
-        Verify if the Docker image is available
+        验证 Docker 镜像是否可用
         """
         image_tag = "code-interpreter:latest"
         client = docker.from_env()
@@ -46,7 +46,7 @@ class CodeInterpreterTool(BaseTool):
             package_path = self._get_installed_package_path()
             dockerfile_path = os.path.join(package_path, "tools/code_interpreter_tool")
             if not os.path.exists(dockerfile_path):
-                raise FileNotFoundError(f"Dockerfile not found in {dockerfile_path}")
+                raise FileNotFoundError(f"在 {dockerfile_path} 中找不到 Dockerfile")
 
             client.images.build(
                 path=dockerfile_path,
@@ -63,7 +63,7 @@ class CodeInterpreterTool(BaseTool):
         self, container: docker.models.containers.Container, libraries: List[str]
     ) -> None:
         """
-        Install missing libraries in the Docker container
+        在 Docker 容器中安装缺少的库
         """
         for library in libraries:
             container.exec_run(f"pip install {library}")
@@ -90,5 +90,6 @@ class CodeInterpreterTool(BaseTool):
         container.remove()
 
         if exec_result.exit_code != 0:
-            return f"Something went wrong while running the code: \n{exec_result.output.decode('utf-8')}"
+            return f"运行代码时出现错误：\n{exec_result.output.decode('utf-8')}"
         return exec_result.output.decode("utf-8")
+    

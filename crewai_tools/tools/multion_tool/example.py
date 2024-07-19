@@ -3,23 +3,23 @@ import os
 from crewai import Agent, Crew, Task
 from multion_tool import MultiOnTool
 
-os.environ["OPENAI_API_KEY"] = "Your Key"
+os.environ["OPENAI_API_KEY"] = "你的密钥"
 
-multion_browse_tool = MultiOnTool(api_key="Your Key")
+multion_browse_tool = MultiOnTool(api_key="你的密钥")
 
-# Create a new agent
+# 创建一个新的代理
 Browser = Agent(
-    role="Browser Agent",
-    goal="control web browsers using natural language ",
-    backstory="An expert browsing agent.",
+    role="浏览器代理",
+    goal="使用自然语言控制网络浏览器",
+    backstory="一个专业的浏览代理。",
     tools=[multion_browse_tool],
     verbose=True,
 )
 
-# Define tasks
+# 定义任务
 browse = Task(
-    description="Summarize the top 3 trending AI News headlines",
-    expected_output="A summary of the top 3 trending AI News headlines",
+    description="总结排名前 3 的热门 AI 新闻标题",
+    expected_output="排名前 3 的热门 AI 新闻标题的摘要",
     agent=Browser,
 )
 

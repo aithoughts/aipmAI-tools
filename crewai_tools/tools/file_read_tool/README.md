@@ -1,29 +1,33 @@
 # FileReadTool
 
-## Description
-The FileReadTool is a versatile component of the crewai_tools package, designed to streamline the process of reading and retrieving content from files. It is particularly useful in scenarios such as batch text file processing, runtime configuration file reading, and data importation for analytics. This tool supports various text-based file formats including `.txt`, `.csv`, `.json`, and adapts its functionality based on the file type, for instance, converting JSON content into a Python dictionary for easy use.
+## 描述
 
-## Installation
-Install the crewai_tools package to use the FileReadTool in your projects:
+FileReadTool 是 crewai_tools 包中的一个多功能组件，旨在简化从文件中读取和检索内容的过程。它在诸如批量文本文件处理、运行时配置文件读取和分析数据导入等场景中特别有用。此工具支持各种基于文本的文件格式，包括 `.txt`、`.csv`、`.json`，并根据文件类型调整其功能，例如，将 JSON 内容转换为 Python 字典以便于使用。
+
+## 安装
+
+安装 crewai_tools 包以在您的项目中使用 FileReadTool：
 
 ```shell
 pip install 'crewai[tools]'
 ```
 
-## Example
-To get started with the FileReadTool:
+## 示例
+
+FileReadTool 入门指南：
 
 ```python
 from crewai_tools import FileReadTool
 
-# Initialize the tool to read any files the agents knows or lean the path for
+# 初始化工具以读取代理知道的任何文件或学习路径
 file_read_tool = FileReadTool()
 
-# OR
+# 或者
 
-# Initialize the tool with a specific file path, so the agent can only read the content of the specified file
+# 使用特定的文件路径初始化工具，以便代理只能读取指定文件的内容
 file_read_tool = FileReadTool(file_path='path/to/your/file.txt')
 ```
 
-## Arguments
-- `file_path`: The path to the file you want to read. It accepts both absolute and relative paths. Ensure the file exists and you have the necessary permissions to access it.
+## 参数
+
+- `file_path`：要读取的文件的路径。它接受绝对路径和相对路径。确保文件存在并且您具有访问它的必要权限。

@@ -1,42 +1,42 @@
 # YoutubeChannelSearchTool
 
-## Description
-This tool is designed to perform semantic searches within a specific Youtube channel's content. Leveraging the RAG (Retrieval-Augmented Generation) methodology, it provides relevant search results, making it invaluable for extracting information or finding specific content without the need to manually sift through videos. It streamlines the search process within Youtube channels, catering to researchers, content creators, and viewers seeking specific information or topics.
+## 描述
+此工具旨在在特定 Youtube 频道的内容中执行语义搜索。它利用 RAG（检索增强生成）方法提供相关的搜索结果，这对于无需手动筛选视频即可提取信息或查找特定内容非常有价值。它简化了 Youtube 频道内的搜索过程，满足了研究人员、内容创作者和寻求特定信息或主题的观众的需求。
 
-## Installation
-To utilize the YoutubeChannelSearchTool, the `crewai_tools` package must be installed. Execute the following command in your shell to install:
+## 安装
+要使用 YoutubeChannelSearchTool，必须安装 `crewai_tools` 包。在您的 shell 中执行以下命令进行安装：
 
 ```shell
 pip install 'crewai[tools]'
 ```
 
-## Example
-To begin using the YoutubeChannelSearchTool, follow the example below. This demonstrates initializing the tool with a specific Youtube channel handle and conducting a search within that channel's content.
+## 示例
+要开始使用 YoutubeChannelSearchTool，请遵循以下示例。这演示了使用特定的 Youtube 频道句柄初始化工具并在该频道的内容中进行搜索。
 
 ```python
 from crewai_tools import YoutubeChannelSearchTool
 
-# Initialize the tool to search within any Youtube channel's content the agent learns about during its execution
+# 初始化工具以在代理执行期间了解的任何 Youtube 频道内容中进行搜索
 tool = YoutubeChannelSearchTool()
 
-# OR
+# 或者
 
-# Initialize the tool with a specific Youtube channel handle to target your search
+# 使用特定的 Youtube 频道句柄初始化工具以定位您的搜索
 tool = YoutubeChannelSearchTool(youtube_channel_handle='@exampleChannel')
 ```
 
-## Arguments
-- `youtube_channel_handle` : A mandatory string representing the Youtube channel handle. This parameter is crucial for initializing the tool to specify the channel you want to search within. The tool is designed to only search within the content of the provided channel handle.
+## 参数
+- `youtube_channel_handle` ：表示 Youtube 频道句柄的必需字符串。此参数对于初始化工具以指定要在其中进行搜索的频道至关重要。该工具旨在仅在提供的频道句柄的内容中进行搜索。
 
-## Custom model and embeddings
+## 自定义模型和嵌入
 
-By default, the tool uses OpenAI for both embeddings and summarization. To customize the model, you can use a config dictionary as follows:
+默认情况下，该工具使用 OpenAI 进行嵌入和摘要。要自定义模型，您可以使用如下配置字典：
 
 ```python
 tool = YoutubeChannelSearchTool(
     config=dict(
         llm=dict(
-            provider="ollama", # or google, openai, anthropic, llama2, ...
+            provider="ollama", # 或 google, openai, anthropic, llama2, ...
             config=dict(
                 model="llama2",
                 # temperature=0.5,

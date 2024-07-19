@@ -1,36 +1,39 @@
-# MultiOnTool Documentation
+## MultiOnTool 文档
 
-## Description
-The MultiOnTool, integrated within the crewai_tools package, empowers CrewAI agents with the capability to navigate and interact with the web through natural language instructions. Leveraging the Multion API, this tool facilitates seamless web browsing, making it an essential asset for projects requiring dynamic web data interaction.
+## 描述
 
-## Installation
-Ensure the `crewai[tools]` package is installed in your environment to use the MultiOnTool. If it's not already installed, you can add it using the command below:
+MultiOnTool 集成在 crewai_tools 软件包中，使 CrewAI 代理能够通过自然语言指令浏览网页并与之交互。该工具利用 Multion API，促进了无缝网页浏览，使其成为需要动态网页数据交互项目的必备资产。
+
+## 安装
+
+要使用 MultiOnTool，请确保在您的环境中安装了 `crewai[tools]` 软件包。如果尚未安装，可以使用以下命令添加：
 ```shell
 pip install 'crewai[tools]'
 ```
 
-## Example
-The following example demonstrates how to initialize the tool and execute a search with a given query:
+## 示例
+
+以下示例演示了如何初始化该工具并使用给定查询执行搜索：
 
 ```python
 from crewai import Agent, Task, Crew
 from crewai_tools import MultiOnTool
 
-# Initialize the tool from a MultiOn Tool
+# 从 MultiOn 工具初始化工具
 multion_tool = MultiOnTool(api_key= "YOUR_MULTION_API_KEY", local=False)
 
 Browser = Agent(
-    role="Browser Agent",
-    goal="control web browsers using natural language ",
-    backstory="An expert browsing agent.",
+    role="浏览器代理",
+    goal="使用自然语言控制网络浏览器",
+    backstory="一个专业的浏览代理。",
     tools=[multion_remote_tool],
     verbose=True,
 )
 
-# example task to search and summarize news
+# 用于搜索和总结新闻的示例任务
 browse = Task(
-    description="Summarize the top 3 trending AI News headlines",
-    expected_output="A summary of the top 3 trending AI News headlines",
+    description="总结排名前 3 的热门 AI 新闻标题",
+    expected_output="排名前 3 的热门 AI 新闻标题的摘要",
     agent=Browser,
 )
 
@@ -39,16 +42,16 @@ crew = Crew(agents=[Browser], tasks=[browse])
 crew.kickoff()
 ```
 
-## Arguments
+## 参数
 
-- `api_key`: Specifies Browserbase API key. Defaults is the `BROWSERBASE_API_KEY` environment variable.
-- `local`: Use the local flag set as "true" to run the agent locally on your browser. Make sure the multion browser extension is installed and API Enabled is checked.
-- `max_steps`: Optional. Set the max_steps the multion agent can take for a command
+- `api_key`：指定 Browserbase API 密钥。默认值为 `BROWSERBASE_API_KEY` 环境变量。
+- `local`：使用设置为“true”的本地标志在您的浏览器上本地运行代理。确保已安装 multion 浏览器扩展程序并选中了“启用 API”。
+- `max_steps`：可选。设置 multion 代理可以为命令执行的最大步骤数
 
-## Steps to Get Started
-To effectively use the `MultiOnTool`, follow these steps:
+## 入门步骤
 
-1. **Install CrewAI**: Confirm that the `crewai[tools]` package is installed in your Python environment.
-2. **Install and use MultiOn**: Follow MultiOn documentation for installing the MultiOn Browser Extension (https://docs.multion.ai/learn/browser-extension).
-3. **Enable API Usage**: Click on the MultiOn extension in the extensions folder of your browser (not the hovering MultiOn icon on the web page) to open the extension configurations. Click the API Enabled toggle to enable the API                             
+要有效使用 `MultiOnTool`，请按照以下步骤操作：
 
+1. **安装 CrewAI**：确认您的 Python 环境中已安装 `crewai[tools]` 软件包。
+2. **安装并使用 MultiOn**：按照 MultiOn 文档安装 MultiOn 浏览器扩展程序 (https://docs.multion.ai/learn/browser-extension)。
+3. **启用 API 使用**：单击浏览器扩展程序文件夹中的 MultiOn 扩展程序（不是网页上悬停的 MultiOn 图标）以打开扩展程序配置。单击“启用 API”切换按钮以启用 API。 

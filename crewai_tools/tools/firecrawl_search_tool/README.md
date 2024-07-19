@@ -1,35 +1,35 @@
 # FirecrawlSearchTool
 
-## Description
+## 描述
 
-[Firecrawl](https://firecrawl.dev) is a platform for crawling and convert any website into clean markdown or structured data.
+[Firecrawl](https://firecrawl.dev) 是一个用于抓取任何网站并将其转换为干净的 Markdown 或结构化数据的平台。
 
-## Installation
+## 安装
 
-- Get an API key from [firecrawl.dev](https://firecrawl.dev) and set it in environment variables (`FIRECRAWL_API_KEY`).
-- Install the [Firecrawl SDK](https://github.com/mendableai/firecrawl) along with `crewai[tools]` package:
+- 从 [firecrawl.dev](https://firecrawl.dev) 获取 API 密钥，并将其设置在环境变量中 (`FIRECRAWL_API_KEY`)。
+- 安装 [Firecrawl SDK](https://github.com/mendableai/firecrawl) 以及 `crewai[tools]` 包：
 
 ```
 pip install firecrawl-py 'crewai[tools]'
 ```
 
-## Example
+## 示例
 
-Utilize the FirecrawlSearchTool as follows to allow your agent to load websites:
+如下使用 FirecrawlSearchTool 以允许您的代理加载网站：
 
 ```python
 from crewai_tools import FirecrawlSearchTool
 
-tool = FirecrawlSearchTool(query='what is firecrawl?')
+tool = FirecrawlSearchTool(query='firecrawl 是什么？')
 ```
 
-## Arguments
+## 参数
 
-- `api_key`: Optional. Specifies Firecrawl API key. Defaults is the `FIRECRAWL_API_KEY` environment variable.
-- `query`: The search query string to be used for searching.
-- `page_options`: Optional. Options for result formatting.
-  - `onlyMainContent`: Optional. Only return the main content of the page excluding headers, navs, footers, etc.
-  - `includeHtml`: Optional. Include the raw HTML content of the page. Will output a html key in the response.
-  - `fetchPageContent`: Optional. Fetch the full content of the page.
-- `search_options`: Optional. Options for controlling the crawling behavior.
-  - `limit`: Optional. Maximum number of pages to crawl.
+- `api_key`：可选。指定 Firecrawl API 密钥。默认为 `FIRECRAWL_API_KEY` 环境变量。
+- `query`：用于搜索的搜索查询字符串。
+- `page_options`：可选。结果格式化选项。
+  - `onlyMainContent`：可选。仅返回页面的主要内容，不包括页眉、导航、页脚等。
+  - `includeHtml`：可选。包含页面的原始 HTML 内容。将在响应中输出一个 html 键。
+  - `fetchPageContent`：可选。获取页面的完整内容。
+- `search_options`：可选。用于控制抓取行为的选项。
+  - `limit`：可选。要抓取的最大页面数。

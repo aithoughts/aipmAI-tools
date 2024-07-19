@@ -12,7 +12,7 @@ class Adapter(BaseModel, ABC):
 
     @abstractmethod
     def query(self, question: str) -> str:
-        """Query the knowledge base with a question and return the answer."""
+        """使用问题查询知识库并返回答案。"""
 
     @abstractmethod
     def add(
@@ -20,7 +20,7 @@ class Adapter(BaseModel, ABC):
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        """Add content to the knowledge base."""
+        """向知识库添加内容。"""
 
 
 class RagTool(BaseTool):
@@ -31,8 +31,8 @@ class RagTool(BaseTool):
         def add(self, *args: Any, **kwargs: Any) -> None:
             raise NotImplementedError
 
-    name: str = "Knowledge base"
-    description: str = "A knowledge base that can be used to answer questions."
+    name: str = "知识库"
+    description: str = "可用于回答问题的知识库。"
     summarize: bool = False
     adapter: Adapter = Field(default_factory=_AdapterPlaceholder)
     config: dict[str, Any] | None = None
@@ -65,7 +65,7 @@ class RagTool(BaseTool):
     ) -> Any:
         self._before_run(query, **kwargs)
 
-        return f"Relevant Content:\n{self.adapter.query(query)}"
+        return f"相关内容：\n{self.adapter.query(query)}"
 
     def _before_run(self, query, **kwargs):
         pass

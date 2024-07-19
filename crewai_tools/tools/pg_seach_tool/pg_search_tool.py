@@ -7,24 +7,24 @@ from ..rag.rag_tool import RagTool
 
 
 class PGSearchToolSchema(BaseModel):
-    """Input for PGSearchTool."""
+    """PGSearchTool 的输入。"""
 
     search_query: str = Field(
         ...,
-        description="Mandatory semantic search query you want to use to search the database's content",
+        description="要用于搜索数据库内容的必需语义搜索查询",
     )
 
 
 class PGSearchTool(RagTool):
-    name: str = "Search a database's table content"
-    description: str = "A tool that can be used to semantic search a query from a database table's content."
+    name: str = "搜索数据库的表内容"
+    description: str = "一个可以用来从数据库表的内容中进行语义搜索的工具。"
     args_schema: Type[BaseModel] = PGSearchToolSchema
-    db_uri: str = Field(..., description="Mandatory database URI")
+    db_uri: str = Field(..., description="必需的数据库 URI")
 
     def __init__(self, table_name: str, **kwargs):
         super().__init__(**kwargs)
         self.add(table_name)
-        self.description = f"A tool that can be used to semantic search a query the {table_name} database table's content."
+        self.description = f"一个可以用来在 {table_name} 数据库表的内容中进行语义搜索的工具。"
         self._generate_description()
 
     def add(

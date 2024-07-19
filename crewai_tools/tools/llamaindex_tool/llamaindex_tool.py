@@ -7,7 +7,7 @@ from pydantic.v1 import BaseModel, Field
 from crewai_tools.tools.base_tool import BaseTool
 
 class LlamaIndexTool(BaseTool):
-    """Tool to wrap LlamaIndex tools/query engines."""
+    """用于包装 LlamaIndex 工具/查询引擎的工具。"""
     llama_index_tool: Any
 
     def _run(
@@ -15,7 +15,7 @@ class LlamaIndexTool(BaseTool):
         *args: Any,
 		**kwargs: Any,
 	) -> Any:
-        """Run tool."""
+        """运行工具。"""
         from llama_index.core.tools import BaseTool as LlamaBaseTool
         tool = cast(LlamaBaseTool, self.llama_index_tool)
         return tool(*args, **kwargs)
@@ -29,11 +29,11 @@ class LlamaIndexTool(BaseTool):
         from llama_index.core.tools import BaseTool as LlamaBaseTool
         
         if not isinstance(tool, LlamaBaseTool):
-            raise ValueError(f"Expected a LlamaBaseTool, got {type(tool)}")
+            raise ValueError(f"预期为 LlamaBaseTool，但得到了 {type(tool)}")
         tool = cast(LlamaBaseTool, tool)
 
         if tool.metadata.fn_schema is None:
-            raise ValueError("The LlamaIndex tool does not have an fn_schema specified.")
+            raise ValueError("LlamaIndex 工具没有指定 fn_schema。")
         args_schema = cast(Type[BaseModel], tool.metadata.fn_schema)
         
         return cls(
@@ -58,15 +58,14 @@ class LlamaIndexTool(BaseTool):
         from llama_index.core.tools import QueryEngineTool
 
         if not isinstance(query_engine, BaseQueryEngine):
-            raise ValueError(f"Expected a BaseQueryEngine, got {type(query_engine)}")
+            raise ValueError(f"预期为 BaseQueryEngine，但得到了 {type(query_engine)}")
 
-        # NOTE: by default the schema expects an `input` variable. However this 
-        # confuses crewAI so we are renaming to `query`.
+        # 注意：默认情况下，模式需要一个 `input` 变量。但这会让 crewAI 感到困惑，所以我们将其重命名为 `query`。
         class QueryToolSchema(BaseModel):
-            """Schema for query tool."""
-            query: str = Field(..., description="Search query for the query tool.")
+            """查询工具的模式。"""
+            query: str = Field(..., description="查询工具的搜索查询。")
 
-        # NOTE: setting `resolve_input_errors` to True is important because the schema expects `input` but we are using `query`
+        # 注意：将 `resolve_input_errors` 设置为 True 很重要，因为模式需要 `input`，但我们使用的是 `query`
         query_engine_tool = QueryEngineTool.from_defaults(
             query_engine,
             name=name,
@@ -74,11 +73,10 @@ class LlamaIndexTool(BaseTool):
             return_direct=return_direct,
             resolve_input_errors=True,  
         )
-        # HACK: we are replacing the schema with our custom schema
+        # HACK：我们将模式替换为我们的自定义模式
         query_engine_tool.metadata.fn_schema = QueryToolSchema
         
         return cls.from_tool(
             query_engine_tool,
             **kwargs
         )
-        

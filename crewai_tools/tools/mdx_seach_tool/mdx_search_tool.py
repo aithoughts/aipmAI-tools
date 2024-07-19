@@ -7,24 +7,24 @@ from ..rag.rag_tool import RagTool
 
 
 class FixedMDXSearchToolSchema(BaseModel):
-    """Input for MDXSearchTool."""
+    """MDXSearchTool 的输入"""
 
     search_query: str = Field(
         ...,
-        description="Mandatory search query you want to use to search the MDX's content",
+        description="要用于搜索 MDX 内容的必填搜索查询",
     )
 
 
 class MDXSearchToolSchema(FixedMDXSearchToolSchema):
-    """Input for MDXSearchTool."""
+    """MDXSearchTool 的输入"""
 
-    mdx: str = Field(..., description="Mandatory mdx path you want to search")
+    mdx: str = Field(..., description="要搜索的必填 mdx 路径")
 
 
 class MDXSearchTool(RagTool):
-    name: str = "Search a MDX's content"
+    name: str = "搜索 MDX 的内容"
     description: str = (
-        "A tool that can be used to semantic search a query from a MDX's content."
+        "可以用来从 MDX 的内容中进行语义搜索的工具。"
     )
     args_schema: Type[BaseModel] = MDXSearchToolSchema
 
@@ -32,7 +32,7 @@ class MDXSearchTool(RagTool):
         super().__init__(**kwargs)
         if mdx is not None:
             self.add(mdx)
-            self.description = f"A tool that can be used to semantic search a query the {mdx} MDX's content."
+            self.description = f"可以用来在 {mdx} MDX 的内容中进行语义搜索的工具。"
             self.args_schema = FixedMDXSearchToolSchema
             self._generate_description()
 

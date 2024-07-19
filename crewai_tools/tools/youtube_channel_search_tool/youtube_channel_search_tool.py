@@ -7,32 +7,32 @@ from ..rag.rag_tool import RagTool
 
 
 class FixedYoutubeChannelSearchToolSchema(BaseModel):
-    """Input for YoutubeChannelSearchTool."""
+    """YoutubeChannelSearchTool 的输入"""
 
     search_query: str = Field(
         ...,
-        description="Mandatory search query you want to use to search the Youtube Channels content",
+        description="用于搜索 Youtube 频道内容的必需搜索查询",
     )
 
 
 class YoutubeChannelSearchToolSchema(FixedYoutubeChannelSearchToolSchema):
-    """Input for YoutubeChannelSearchTool."""
+    """YoutubeChannelSearchTool 的输入"""
 
     youtube_channel_handle: str = Field(
-        ..., description="Mandatory youtube_channel_handle path you want to search"
+        ..., description="要搜索的 Youtube 频道句柄的必需路径"
     )
 
 
 class YoutubeChannelSearchTool(RagTool):
-    name: str = "Search a Youtube Channels content"
-    description: str = "A tool that can be used to semantic search a query from a Youtube Channels content."
+    name: str = "搜索 Youtube 频道内容"
+    description: str = "一个可以用来从 Youtube 频道内容中进行语义搜索的工具。"
     args_schema: Type[BaseModel] = YoutubeChannelSearchToolSchema
 
     def __init__(self, youtube_channel_handle: Optional[str] = None, **kwargs):
         super().__init__(**kwargs)
         if youtube_channel_handle is not None:
             self.add(youtube_channel_handle)
-            self.description = f"A tool that can be used to semantic search a query the {youtube_channel_handle} Youtube Channels content."
+            self.description = f"一个可以用来在 {youtube_channel_handle} Youtube 频道内容中进行语义搜索的工具。"
             self.args_schema = FixedYoutubeChannelSearchToolSchema
             self._generate_description()
 

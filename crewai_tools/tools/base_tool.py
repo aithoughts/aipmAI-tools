@@ -13,17 +13,17 @@ class BaseTool(BaseModel, ABC):
     model_config = ConfigDict()
 
     name: str
-    """The unique name of the tool that clearly communicates its purpose."""
+    """工具的唯一名称，清楚地表明其用途。"""
     description: str
-    """Used to tell the model how/when/why to use the tool."""
+    """用于告诉模型如何/何时/为什么使用该工具。"""
     args_schema: Type[V1BaseModel] = Field(default_factory=_ArgsSchemaPlaceholder)
-    """The schema for the arguments that the tool accepts."""
+    """工具接受的参数的架构。"""
     description_updated: bool = False
-    """Flag to check if the description has been updated."""
+    """用于检查描述是否已更新的标志。"""
     cache_function: Optional[Callable] = lambda _args, _result: True
-    """Function that will be used to determine if the tool should be cached, should return a boolean. If None, the tool will be cached."""
+    """用于确定是否应该缓存工具的函数，应返回一个布尔值。如果为 None，则将缓存该工具。"""
     result_as_answer: bool = False
-    """Flag to check if the tool should be the final agent answer."""
+    """用于检查该工具是否应该是最终代理答案的标志。"""
 
     @validator("args_schema", always=True, pre=True)
     def _default_args_schema(cls, v: Type[V1BaseModel]) -> Type[V1BaseModel]:
@@ -50,7 +50,7 @@ class BaseTool(BaseModel, ABC):
         *args: Any,
         **kwargs: Any,
     ) -> Any:
-        print(f"Using Tool: {self.name}")
+        print(f"正在使用工具：{self.name}")
         return self._run(*args, **kwargs)
 
     @abstractmethod
@@ -59,7 +59,7 @@ class BaseTool(BaseModel, ABC):
         *args: Any,
         **kwargs: Any,
     ) -> Any:
-        """Here goes the actual implementation of the tool."""
+        """工具的实际实现。"""
 
     def to_langchain(self) -> StructuredTool:
         self._set_args_schema()
@@ -100,7 +100,7 @@ class BaseTool(BaseModel, ABC):
 
 class Tool(BaseTool):
     func: Callable
-    """The function that will be executed when the tool is called."""
+    """调用工具时将执行的函数。"""
 
     def _run(self, *args: Any, **kwargs: Any) -> Any:
         return self.func(*args, **kwargs)
@@ -114,15 +114,15 @@ def to_langchain(
 
 def tool(*args):
     """
-    Decorator to create a tool from a function.
+    用于从函数创建工具的装饰器。
     """
 
     def _make_with_name(tool_name: str) -> Callable:
         def _make_tool(f: Callable) -> BaseTool:
             if f.__doc__ is None:
-                raise ValueError("Function must have a docstring")
+                raise ValueError("函数必须有一个文档字符串")
             if f.__annotations__ is None:
-                raise ValueError("Function must have type annotations")
+                raise ValueError("函数必须有类型注释")
 
             class_name = "".join(tool_name.split()).title()
             args_schema = type(
@@ -148,4 +148,4 @@ def tool(*args):
         return _make_with_name(args[0].__name__)(args[0])
     if len(args) == 1 and isinstance(args[0], str):
         return _make_with_name(args[0])
-    raise ValueError("Invalid arguments")
+    raise ValueError("无效的参数")

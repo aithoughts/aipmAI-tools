@@ -7,13 +7,13 @@ from crewai_tools.tools.base_tool import BaseTool
 
 
 class SerplyNewsSearchToolSchema(BaseModel):
-    """Input for Serply News Search."""
-    search_query: str = Field(..., description="Mandatory search query you want to use to fetch news articles")
+    """Serply 新闻搜索的输入。"""
+    search_query: str = Field(..., description="要用于获取新闻文章的必填搜索查询")
 
 
 class SerplyNewsSearchTool(BaseTool):
-    name: str = "News Search"
-    description: str = "A tool to perform News article search with a search_query."
+    name: str = "新闻搜索"
+    description: str = "使用 search_query 执行新闻文章搜索的工具。"
     args_schema: Type[BaseModel] = SerplyNewsSearchToolSchema
     search_url: str = "https://api.serply.io/v1/news/"
     proxy_location: Optional[str] = "US"
@@ -27,9 +27,9 @@ class SerplyNewsSearchTool(BaseTool):
             **kwargs
     ):
         """
-            param: limit (int): The maximum number of results to return [10-100, defaults to 10]
-            proxy_location: (str): Where to get news, specifically for a specific country results.
-                 ['US', 'CA', 'IE', 'GB', 'FR', 'DE', 'SE', 'IN', 'JP', 'KR', 'SG', 'AU', 'BR'] (defaults to US)
+            param: limit (int): 要返回的最大结果数 [10-100，默认为 10]
+            proxy_location: (str): 在哪里获取新闻，特别是针对特定国家/地区的结果。
+                 ['US', 'CA', 'IE', 'GB', 'FR', 'DE', 'SE', 'IN', 'JP', 'KR', 'SG', 'AU', 'BR']（默认为美国）
         """
         super().__init__(**kwargs)
         self.limit = limit
@@ -44,7 +44,7 @@ class SerplyNewsSearchTool(BaseTool):
             self,
             **kwargs: Any,
     ) -> Any:
-        # build query parameters
+        # 构建查询参数
         query_payload = {}
 
         if "query" in kwargs:
@@ -52,7 +52,7 @@ class SerplyNewsSearchTool(BaseTool):
         elif "search_query" in kwargs:
             query_payload["q"] = kwargs["search_query"]
 
-        # build the url
+        # 构建 URL
         url = f"{self.search_url}{urlencode(query_payload)}"
 
         response = requests.request("GET", url, headers=self.headers)
@@ -62,20 +62,20 @@ class SerplyNewsSearchTool(BaseTool):
             string = []
             for result in results[:self.limit]:
                 try:
-                    # follow url
+                    # 跟踪 URL
                     r = requests.get(result['link'])
                     final_link = r.history[-1].headers['Location']
                     string.append('\n'.join([
-                        f"Title: {result['title']}",
-                        f"Link: {final_link}",
-                        f"Source: {result['source']['title']}",
-                        f"Published: {result['published']}",
+                        f"标题：{result['title']}",
+                        f"链接：{final_link}",
+                        f"来源：{result['source']['title']}",
+                        f"发布时间：{result['published']}",
                         "---"
                     ]))
                 except KeyError:
                     continue
 
             content = '\n'.join(string)
-            return f"\nSearch results: {content}\n"
+            return f"\n搜索结果：{content}\n"
         else:
             return results

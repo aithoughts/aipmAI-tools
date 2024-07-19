@@ -3,13 +3,13 @@ from pydantic.v1 import BaseModel, Field
 from crewai_tools.tools.base_tool import BaseTool
 
 class FirecrawlCrawlWebsiteToolSchema(BaseModel):
-    url: str = Field(description="Website URL")
-    crawler_options: Optional[Dict[str, Any]] = Field(default=None, description="Options for crawling")
-    page_options: Optional[Dict[str, Any]] = Field(default=None, description="Options for page")
+    url: str = Field(description="网站 URL")
+    crawler_options: Optional[Dict[str, Any]] = Field(default=None, description="抓取选项")
+    page_options: Optional[Dict[str, Any]] = Field(default=None, description="页面选项")
 
 class FirecrawlCrawlWebsiteTool(BaseTool):
-    name: str = "Firecrawl web crawl tool"
-    description: str = "Crawl webpages using Firecrawl and return the contents"
+    name: str = "Firecrawl 网站抓取工具"
+    description: str = "使用 Firecrawl 抓取网页并返回内容"
     args_schema: Type[BaseModel] = FirecrawlCrawlWebsiteToolSchema
     api_key: Optional[str] = None
     firecrawl: Optional[Any] = None
@@ -20,7 +20,7 @@ class FirecrawlCrawlWebsiteTool(BaseTool):
             from firecrawl import FirecrawlApp # type: ignore
         except ImportError:
            raise ImportError(
-               "`firecrawl` package not found, please run `pip install firecrawl-py`"
+               "找不到 `firecrawl` 包，请运行 `pip install firecrawl-py`"
            )
 
         self.firecrawl = FirecrawlApp(api_key=api_key)

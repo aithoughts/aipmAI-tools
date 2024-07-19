@@ -7,24 +7,24 @@ from ..rag.rag_tool import RagTool
 
 
 class FixedJSONSearchToolSchema(BaseModel):
-    """Input for JSONSearchTool."""
+    """JSONSearchTool 的输入"""
 
     search_query: str = Field(
         ...,
-        description="Mandatory search query you want to use to search the JSON's content",
+        description="您想用来搜索 JSON 内容的必需搜索查询",
     )
 
 
 class JSONSearchToolSchema(FixedJSONSearchToolSchema):
-    """Input for JSONSearchTool."""
+    """JSONSearchTool 的输入"""
 
-    json_path: str = Field(..., description="Mandatory json path you want to search")
+    json_path: str = Field(..., description="您想搜索的必需 json 路径")
 
 
 class JSONSearchTool(RagTool):
-    name: str = "Search a JSON's content"
+    name: str = "搜索 JSON 内容"
     description: str = (
-        "A tool that can be used to semantic search a query from a JSON's content."
+        "一个可以用来从 JSON 内容中语义搜索查询的工具。"
     )
     args_schema: Type[BaseModel] = JSONSearchToolSchema
 
@@ -32,7 +32,7 @@ class JSONSearchTool(RagTool):
         super().__init__(**kwargs)
         if json_path is not None:
             self.add(json_path)
-            self.description = f"A tool that can be used to semantic search a query the {json_path} JSON's content."
+            self.description = f"一个可以用来语义搜索 {json_path} JSON 内容的查询工具。"
             self.args_schema = FixedJSONSearchToolSchema
             self._generate_description()
 

@@ -7,24 +7,24 @@ from ..rag.rag_tool import RagTool
 
 
 class FixedDirectorySearchToolSchema(BaseModel):
-    """Input for DirectorySearchTool."""
+    """DirectorySearchTool 的输入"""
 
     search_query: str = Field(
         ...,
-        description="Mandatory search query you want to use to search the directory's content",
+        description="您想用来搜索目录内容的必需搜索查询",
     )
 
 
 class DirectorySearchToolSchema(FixedDirectorySearchToolSchema):
-    """Input for DirectorySearchTool."""
+    """DirectorySearchTool 的输入"""
 
-    directory: str = Field(..., description="Mandatory directory you want to search")
+    directory: str = Field(..., description="您想搜索的必需目录")
 
 
 class DirectorySearchTool(RagTool):
-    name: str = "Search a directory's content"
+    name: str = "搜索目录内容"
     description: str = (
-        "A tool that can be used to semantic search a query from a directory's content."
+        "一个可以用来从目录内容中语义搜索查询的工具。"
     )
     args_schema: Type[BaseModel] = DirectorySearchToolSchema
 
@@ -32,7 +32,7 @@ class DirectorySearchTool(RagTool):
         super().__init__(**kwargs)
         if directory is not None:
             self.add(directory)
-            self.description = f"A tool that can be used to semantic search a query the {directory} directory's content."
+            self.description = f"一个可以用来语义搜索 {directory} 目录内容的查询工具。"
             self.args_schema = FixedDirectorySearchToolSchema
             self._generate_description()
 
@@ -58,3 +58,4 @@ class DirectorySearchTool(RagTool):
         **kwargs: Any,
     ) -> Any:
         return super()._run(query=search_query, **kwargs)
+    

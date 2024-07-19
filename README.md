@@ -1,124 +1,124 @@
 <div align="center">
 
-![Logo of crewAI, two people rowing on a boat](./assets/crewai_logo.png)
+![crewAI 的 Logo，两个人在一艘船上划船](./assets/crewai_logo.png)
 
 <div align="left">
 
-# **crewAI Tools**
-This document provides a comprehensive guide for setting up sophisticated tools for [crewAI](https://github.com/joaomdmoura/crewai) agents, facilitating the creation of bespoke tooling to empower your AI solutions.
+# **crewAI 工具**
+本文档全面介绍了如何为 [crewAI](https://github.com/joaomdmoura/crewai) 代理设置复杂的工具，方便创建定制工具以增强您的 AI 解决方案。
 
-In the realm of CrewAI agents, tools are pivotal for enhancing functionality. This guide outlines the steps to equip your agents with an arsenal of ready-to-use tools and the methodology to craft your own.
+在 CrewAI 代理领域，工具对于增强功能至关重要。本指南概述了为您的代理配备一系列现成工具的步骤，以及创建您自己的工具的方法。
 
 </div>
 
 <h3>
 
-[Homepage](https://www.crewai.io/) | [Documentation](https://docs.crewai.com/) | [Chat with Docs](https://chatg.pt/DWjSBZn) | [Examples](https://github.com/joaomdmoura/crewai-examples) | [Discord](https://discord.com/invite/X4JWnZnxPb)
+[主页](https://www.crewai.io/) | [文档](https://docs.crewai.com/) | [与文档聊天](https://chatg.pt/DWjSBZn) | [示例](https://github.com/joaomdmoura/crewai-examples) | [Discord](https://discord.com/invite/X4JWnZnxPb)
 
 </h3>
 
 </div>
 
-## Table of contents
+## 目录
 
-- [Creating Your Tools](#creating-your-tools)
-	- [Subclassing `BaseTool`](#subclassing-basetool)
-	- [Utilizing the `tool` Decorator](#utilizing-the-tool-decorator)
-- [Contribution Guidelines](#contribution-guidelines)
-- [Development Setup](#development-setup)
+- [创建您的工具](#创建您的工具)
+	- [继承 `BaseTool`](#继承-basetool)
+	- [使用 `tool` 装饰器](#使用-tool-装饰器)
+- [贡献指南](#贡献指南)
+- [开发设置](#开发设置)
 
-## Creating Your Tools
+## 创建您的工具
 
-Tools are always expect to return strings, as they are meant to be used by the agents to generate responses.
+工具始终应返回字符串，因为它们旨在供代理用于生成响应。
 
-There are three ways to create tools for crewAI agents:
-- [Subclassing `BaseTool`](#subclassing-basetool)
-- [Using the `tool` decorator](#utilizing-the-tool-decorator)
+创建 crewAI 代理工具的方法有三种：
+- [继承 `BaseTool`](#继承-basetool)
+- [使用 `tool` 装饰器](#使用-tool-装饰器)
 
-### Subclassing `BaseTool`
+### 继承 `BaseTool`
 
 ```python
 from crewai_tools import BaseTool
 
 class MyCustomTool(BaseTool):
-    name: str = "Name of my tool"
-    description: str = "Clear description for what this tool is useful for, you agent will need this information to use it."
+    name: str = "我的工具名称"
+    description: str = "对该工具用途的清晰描述，您的代理将需要此信息才能使用它。"
 
     def _run(self, argument: str) -> str:
-        # Implementation goes here
+        # 实现代码在此处
         pass
 ```
 
-Define a new class inheriting from `BaseTool`, specifying `name`, `description`, and the `_run` method for operational logic.
+定义一个继承自 `BaseTool` 的新类，指定 `name`、`description` 和用于操作逻辑的 `_run` 方法。
 
 
-### Utilizing the `tool` Decorator
+### 使用 `tool` 装饰器
 
-For a simpler approach, create a `Tool` object directly with the required attributes and a functional logic.
+对于更简单的方法，请直接使用所需的属性和功能逻辑创建 `Tool` 对象。
 
 ```python
 from crewai_tools import tool
-@tool("Name of my tool")
+@tool("我的工具名称")
 def my_tool(question: str) -> str:
-    """Clear description for what this tool is useful for, you agent will need this information to use it."""
-    # Function logic here
+    """对该工具用途的清晰描述，您的代理将需要此信息才能使用它。"""
+    # 函数逻辑在此处
 ```
 
-The `tool` decorator simplifies the process, transforming functions into tools with minimal overhead.
+`tool` 装饰器简化了流程，以最小的开销将函数转换为工具。
 
-## Contribution Guidelines
+## 贡献指南
 
-We eagerly welcome contributions to enrich this toolset. To contribute:
+我们热烈欢迎您为丰富此工具集做出贡献。要做出贡献：
 
-1. **Fork the Repository:** Begin with forking the repository to your GitHub account.
-2. **Feature Branch:** Create a new branch in your fork for the feature or improvement.
-3. **Implement Your Feature:** Add your contribution to the new branch.
-4. **Pull Request:** Submit a pull request from your feature branch to the main repository.
+1. **Fork 仓库：**首先将仓库 fork 到您的 GitHub 帐户。
+2. **功能分支：**在您的 fork 中为功能或改进创建一个新分支。
+3. **实现您的功能：**将您的贡献添加到新分支中。
+4. **拉取请求：**从您的功能分支向主仓库提交拉取请求。
 
-Your contributions are greatly appreciated and will help enhance this project.
+我们非常感谢您的贡献，这将有助于增强此项目。
 
-## **Development Setup**
+## **开发设置**
 
-**Installing Dependencies:**
+**安装依赖项：**
 
 ```bash
 poetry install
 ```
 
-**Activating Virtual Environment:**
+**激活虚拟环境：**
 
 ```bash
 poetry shell
 ```
 
-**Setting Up Pre-commit Hooks:**
+**设置预提交钩子：**
 
 ```bash
 pre-commit install
 ```
 
-**Running Tests:**
+**运行测试：**
 
 ```bash
 poetry run pytest
 ```
 
-**Static Type Checking:**
+**静态类型检查：**
 
 ```bash
 poetry run pyright
 ```
 
-**Packaging:**
+**打包：**
 
 ```bash
 poetry build
 ```
 
-**Local Installation:**
+**本地安装：**
 
 ```bash
 pip install dist/*.tar.gz
 ```
 
-Thank you for your interest in enhancing the capabilities of AI agents through advanced tooling. Your contributions make a significant impact.
+感谢您有兴趣通过高级工具增强 AI 代理的功能。您的贡献将产生重大影响。

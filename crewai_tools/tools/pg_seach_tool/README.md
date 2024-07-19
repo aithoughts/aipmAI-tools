@@ -1,41 +1,45 @@
-# PGSearchTool
+## PGSearchTool
 
-## Description
-This tool is designed to facilitate semantic searches within PostgreSQL database tables. Leveraging the RAG (Retrieve and Generate) technology, the PGSearchTool provides users with an efficient means of querying database table content, specifically tailored for PostgreSQL databases. It simplifies the process of finding relevant data through semantic search queries, making it an invaluable resource for users needing to perform advanced queries on extensive datasets within a PostgreSQL database.
+## 描述
 
-## Installation
-To install the `crewai_tools` package and utilize the PGSearchTool, execute the following command in your terminal:
+此工具旨在促进 PostgreSQL 数据库表内的语义搜索。PGSearchTool 利用 RAG（检索和生成）技术，为用户提供了一种高效的数据库表内容查询方法，专为 PostgreSQL 数据库量身定制。它通过语义搜索查询简化了查找相关数据的过程，使其成为需要对 PostgreSQL 数据库中的大型数据集执行高级查询的用户的宝贵资源。
+
+## 安装
+
+要安装 `crewai_tools` 软件包并使用 PGSearchTool，请在终端中执行以下命令：
 
 ```shell
 pip install 'crewai[tools]'
 ```
 
-## Example
-Below is an example showcasing how to use the PGSearchTool to conduct a semantic search on a table within a PostgreSQL database:
+## 示例
+
+以下示例展示了如何使用 PGSearchTool 对 PostgreSQL 数据库中的表进行语义搜索：
 
 ```python
 from crewai_tools import PGSearchTool
 
-# Initialize the tool with the database URI and the target table name
+# 使用数据库 URI 和目标表名初始化工具
 tool = PGSearchTool(db_uri='postgresql://user:password@localhost:5432/mydatabase', table_name='employees')
 
 ```
 
-## Arguments
-The PGSearchTool requires the following arguments for its operation:
+## 参数
 
-- `db_uri`: A string representing the URI of the PostgreSQL database to be queried. This argument is mandatory and must include the necessary authentication details and the location of the database.
-- `table_name`: A string specifying the name of the table within the database on which the semantic search will be performed. This argument is mandatory.
+PGSearchTool 需要以下参数才能运行：
 
-## Custom model and embeddings
+- `db_uri`：表示要查询的 PostgreSQL 数据库的 URI 的字符串。此参数是必需的，并且必须包含必要的身份验证详细信息和数据库的位置。
+- `table_name`：指定将在其上执行语义搜索的数据库中表的名称的字符串。此参数是必需的。
 
-By default, the tool uses OpenAI for both embeddings and summarization. To customize the model, you can use a config dictionary as follows:
+## 自定义模型和嵌入
+
+默认情况下，该工具使用 OpenAI 进行嵌入和摘要。要自定义模型，可以使用如下所示的配置字典：
 
 ```python
 tool = PGSearchTool(
     config=dict(
         llm=dict(
-            provider="ollama", # or google, openai, anthropic, llama2, ...
+            provider="ollama", # 或 google, openai, anthropic, llama2, ...
             config=dict(
                 model="llama2",
                 # temperature=0.5,
