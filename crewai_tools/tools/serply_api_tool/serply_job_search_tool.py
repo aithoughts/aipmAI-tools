@@ -10,7 +10,6 @@ class SerplyJobSearchToolSchema(BaseModel):
     """Serply 招聘搜索的输入。"""
     search_query: str = Field(..., description="要用于获取招聘信息的必填搜索查询。")
 
-
 class SerplyJobSearchTool(RagTool):
     name: str = "招聘搜索"
     description: str = "一个使用 search_query 在美国执行招聘搜索的工具。"

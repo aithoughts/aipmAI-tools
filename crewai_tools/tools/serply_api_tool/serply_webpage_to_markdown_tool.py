@@ -9,7 +9,6 @@ class SerplyWebpageToMarkdownToolSchema(BaseModel):
     """Serply 网页请求的输入。"""
     url: str = Field(..., description="要用于获取并转换为 Markdown 的必填 URL")
 
-
 class SerplyWebpageToMarkdownTool(RagTool):
     name: str = "网页转 Markdown"
     description: str = "将网页转换为 Markdown 以便 LLM 更容易理解的工具"
