@@ -5,7 +5,7 @@
 <div align="left">
 
 # **crewAI 工具**
-本文档全面介绍了如何为 [crewAI](https://github.com/joaomdmoura/crewai) 代理设置复杂的工具，方便创建定制工具以增强您的 AI 解决方案。
+本文档全面介绍了如何为 [crewAI](https://github.com/aithoughts/aipmAI) 代理设置复杂的工具，方便创建定制工具以增强您的 AI 解决方案。
 
 在 CrewAI 代理领域，工具对于增强功能至关重要。本指南概述了为您的代理配备一系列现成工具的步骤，以及创建您自己的工具的方法。
 
@@ -13,7 +13,7 @@
 
 <h3>
 
-[主页](https://www.crewai.io/) | [文档](https://docs.crewai.com/) | [与文档聊天](https://chatg.pt/DWjSBZn) | [示例](https://github.com/joaomdmoura/crewai-examples) | [Discord](https://discord.com/invite/X4JWnZnxPb)
+[主页](https://www.theforage.cn/) | [aipmAI - crewAI 中文解决方案](https://aipm-docs.theforage.cn/) | [与文档聊天](https://chatg.pt/DWjSBZn) | [示例](https://github.com/aithoughts/aipmAI-examples) | [Discord](https://discord.com/invite/X4JWnZnxPb)
 
 </h3>
 
