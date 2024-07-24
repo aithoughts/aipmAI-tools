@@ -17,11 +17,11 @@ def _save_results_to_file(content: str) -> None:
 
 class SerperDevToolSchema(BaseModel):
     """SerperDevTool 的输入"""
-    search_query: str = Field(..., description="要用于搜索互联网的必填搜索查询")
+    search_query: str = Field(..., description="进行Google搜索所必填的搜索关键词")
 
 class SerperDevTool(BaseTool):
-    name: str = "搜索互联网"
-    description: str = "可以使用 search_query 搜索互联网的工具。"
+    name: str = "通过Google进行搜索"
+    description: str = "可以使用 search_query 进行Google搜索的工具。"
     args_schema: Type[BaseModel] = SerperDevToolSchema
     search_url: str = "https://google.serper.dev/search"
     country: Optional[str] = ''

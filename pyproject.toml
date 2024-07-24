@@ -24,7 +24,7 @@ docker = "^7.1.0"
 embedchain = "^0.1.114"
 
 [tool.poetry.urls]
-Homepage = "https://aipmai-docs.theforage.cn"
+Homepage = "https://aipmai.theforage.cn"
 Repository = "https://github.com/aithoughts/aipmAI-tools"
 
 [build-system]

@@ -15,7 +15,7 @@ class ScrapeWebsiteToolSchema(FixedScrapeWebsiteToolSchema):
 
 class ScrapeWebsiteTool(BaseTool):
     name: str = "读取网站内容"
-    description: str = "一个可以用来读取网站内容的工具。"
+    description: str = "用来读取网站内容的工具。"
     args_schema: Type[BaseModel] = ScrapeWebsiteToolSchema
     website_url: Optional[str] = None
     cookies: Optional[dict] = None
@@ -32,7 +32,7 @@ class ScrapeWebsiteTool(BaseTool):
         super().__init__(**kwargs)
         if website_url is not None:
             self.website_url = website_url
-            self.description = f"一个可以用来读取 {website_url} 内容的工具。"
+            self.description = f"用来读取 {website_url} 内容的工具。"
             self.args_schema = FixedScrapeWebsiteToolSchema
             self._generate_description()
             if cookies is not None:

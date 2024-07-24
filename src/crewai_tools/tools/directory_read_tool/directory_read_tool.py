@@ -9,11 +9,11 @@ class FixedDirectoryReadToolSchema(BaseModel):
 
 class DirectoryReadToolSchema(FixedDirectoryReadToolSchema):
     """DirectoryReadTool 的输入"""
-    directory: str = Field(..., description="要列出内容的必需目录")
+    directory: str = Field(..., description="要列出内容的目录（必填）")
 
 class DirectoryReadTool(BaseTool):
     name: str = "列出目录中的文件"
-    description: str = "一个可以用来递归列出目录内容的工具。"
+    description: str = "用来递归列出目录内容的工具。"
     args_schema: Type[BaseModel] = DirectoryReadToolSchema
     directory: Optional[str] = None
 
@@ -21,7 +21,7 @@ class DirectoryReadTool(BaseTool):
         super().__init__(**kwargs)
         if directory is not None:
             self.directory = directory
-            self.description = f"一个可以用来列出 {directory} 内容的工具。"
+            self.description = f"用来列出 {directory} 内容的工具。"
             self.args_schema = FixedDirectoryReadToolSchema
             self._generate_description()
 
