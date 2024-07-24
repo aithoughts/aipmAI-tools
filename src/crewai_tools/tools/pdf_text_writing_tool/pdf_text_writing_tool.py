@@ -3,6 +3,8 @@ from pydantic import BaseModel, Field
 from pypdf import PdfReader, PdfWriter, PageObject, ContentStream, NameObject, Font
 from pathlib import Path
 
+from ..rag.rag_tool import RagTool
+
 
 class PDFTextWritingToolSchema(BaseModel):
     """PDFTextWritingTool 的输入模式。"""
@@ -17,9 +19,9 @@ class PDFTextWritingToolSchema(BaseModel):
 
 
 class PDFTextWritingTool(RagTool):
-    """一个用于在 PDF 中的特定位置添加文本的工具，支持自定义字体。"""
+    """用于在 PDF 中的特定位置添加文本的工具，支持自定义字体。"""
     name: str = "PDF 文本写入工具"
-    description: str = "一个可以在 PDF 文档的特定位置写入文本的工具，可以选择嵌入自定义字体。"
+    description: str = "在 PDF 文档的特定位置写入文本的工具，可以选择嵌入自定义字体。"
     args_schema: Type[BaseModel] = PDFTextWritingToolSchema
 
     def run(self, pdf_path: str, text: str, position: tuple, font_size: int, font_color: str,

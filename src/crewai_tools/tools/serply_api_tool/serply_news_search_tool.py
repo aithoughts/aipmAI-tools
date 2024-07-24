@@ -8,7 +8,7 @@ from crewai_tools.tools.base_tool import BaseTool
 
 class SerplyNewsSearchToolSchema(BaseModel):
     """Serply 新闻搜索的输入。"""
-    search_query: str = Field(..., description="要用于获取新闻文章的必填搜索查询")
+    search_query: str = Field(..., description="用于获取新闻文章的必填搜索查询")
 
 
 class SerplyNewsSearchTool(BaseTool):
@@ -28,7 +28,7 @@ class SerplyNewsSearchTool(BaseTool):
     ):
         """
             param: limit (int): 要返回的最大结果数 [10-100，默认为 10]
-            proxy_location: (str): 在哪里获取新闻，特别是针对特定国家/地区的结果。
+            proxy_location: (str): 指定搜索的代理位置，特别是针对特定国家/地区的结果。
                  ['US', 'CA', 'IE', 'GB', 'FR', 'DE', 'SE', 'IN', 'JP', 'KR', 'SG', 'AU', 'BR']（默认为美国）
         """
         super().__init__(**kwargs)

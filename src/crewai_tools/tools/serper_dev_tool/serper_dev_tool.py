@@ -17,7 +17,7 @@ def _save_results_to_file(content: str) -> None:
 
 class SerperDevToolSchema(BaseModel):
     """SerperDevTool 的输入"""
-    search_query: str = Field(..., description="进行Google搜索所必填的搜索关键词")
+    search_query: str = Field(..., description="进行Google搜索的搜索关键词（必填）")
 
 class SerperDevTool(BaseTool):
     name: str = "通过Google进行搜索"

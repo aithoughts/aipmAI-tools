@@ -8,7 +8,7 @@ from crewai_tools.tools.base_tool import BaseTool
 
 class SerplyWebSearchToolSchema(BaseModel):
     """Serply 网络搜索的输入。"""
-    search_query: str = Field(..., description="要用于 Google 搜索的必填搜索查询")
+    search_query: str = Field(..., description="用于 Google 搜索的必填搜索查询")
 
 
 class SerplyWebSearchTool(BaseTool):
@@ -37,7 +37,7 @@ class SerplyWebSearchTool(BaseTool):
                 （参考 https://developers.google.com/custom-search/docs/xml_results?hl=en#wsInterfaceLanguages）
             param: limit (int): 要返回的最大结果数 [10-100，默认为 10]
             param: device_type (str): 桌面/移动设备结果（默认为桌面）
-            proxy_location: (str): 在哪里执行搜索，特别是针对本地/区域结果。
+            proxy_location: (str): 指定搜索的代理位置，特别是针对本地/区域结果。
                  ['US', 'CA', 'IE', 'GB', 'FR', 'DE', 'SE', 'IN', 'JP', 'KR', 'SG', 'AU', 'BR']（默认为美国）
         """
         super().__init__(**kwargs)

@@ -8,7 +8,7 @@ from crewai_tools.tools.rag.rag_tool import RagTool
 
 class SerplyJobSearchToolSchema(BaseModel):
     """Serply 招聘搜索的输入。"""
-    search_query: str = Field(..., description="要用于获取招聘信息的必填搜索查询。")
+    search_query: str = Field(..., description="用于获取招聘信息的必填搜索查询。")
 
 class SerplyJobSearchTool(RagTool):
     name: str = "招聘搜索"
@@ -17,7 +17,7 @@ class SerplyJobSearchTool(RagTool):
     request_url: str = "https://api.serply.io/v1/job/search/"
     proxy_location: Optional[str] = "US"
     """
-        proxy_location: (str): 在哪里获取招聘信息，特别是针对特定国家/地区的结果。
+        proxy_location: (str): 指定搜索的代理位置，特别是针对特定国家/地区的结果。
             - 当前仅支持美国
     """
     headers: Optional[dict] = {}

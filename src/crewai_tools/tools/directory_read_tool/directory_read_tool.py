@@ -21,7 +21,7 @@ class DirectoryReadTool(BaseTool):
         super().__init__(**kwargs)
         if directory is not None:
             self.directory = directory
-            self.description = f"用来列出 {directory} 内容的工具。"
+            self.description = f"用来列出 {directory} 目录内容的工具。"
             self.args_schema = FixedDirectoryReadToolSchema
             self._generate_description()
 

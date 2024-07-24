@@ -7,7 +7,7 @@ from crewai_tools.tools.rag.rag_tool import RagTool
 
 class SerplyWebpageToMarkdownToolSchema(BaseModel):
     """Serply 网页请求的输入。"""
-    url: str = Field(..., description="要用于获取并转换为 Markdown 的必填 URL")
+    url: str = Field(..., description="用于获取并转换为 Markdown 的必填 URL")
 
 class SerplyWebpageToMarkdownTool(RagTool):
     name: str = "网页转 Markdown"

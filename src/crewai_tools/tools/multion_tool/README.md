@@ -44,7 +44,7 @@ crew.kickoff()
 
 ## 参数
 
-- `api_key`：指定 Browserbase API 密钥。默认值为 `BROWSERBASE_API_KEY` 环境变量。
+- `api_key`：指定 MultiOn API 密钥。默认值为 `MULTION_API_KEY` 环境变量。
 - `local`：使用设置为“true”的本地标志在您的浏览器上本地运行代理。确保已安装 multion 浏览器扩展程序并选中了“启用 API”。
 - `max_steps`：可选。设置 multion 代理可以为命令执行的最大步骤数
 

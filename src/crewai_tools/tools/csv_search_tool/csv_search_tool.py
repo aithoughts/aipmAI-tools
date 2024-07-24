@@ -11,20 +11,20 @@ class FixedCSVSearchToolSchema(BaseModel):
 
     search_query: str = Field(
         ...,
-        description="您想用于搜索 CSV 内容的必需搜索查询",
+        description="用于搜索 CSV 内容的搜索查询（必填）",
     )
 
 
 class CSVSearchToolSchema(FixedCSVSearchToolSchema):
     """CSVSearchTool 的输入"""
 
-    csv: str = Field(..., description="您想搜索的必需 CSV 路径")
+    csv: str = Field(..., description="想搜索的 CSV 路径（必填）")
 
 
 class CSVSearchTool(RagTool):
     name: str = "搜索 CSV 内容"
     description: str = (
-        "一个可以用来从 CSV 内容中语义搜索查询的工具。"
+        "用来从 CSV 内容中语义搜索查询的工具。"
     )
     args_schema: Type[BaseModel] = CSVSearchToolSchema
 
@@ -32,7 +32,7 @@ class CSVSearchTool(RagTool):
         super().__init__(**kwargs)
         if csv is not None:
             self.add(csv)
-            self.description = f"一个可以用来语义搜索 {csv} CSV 内容的查询工具。"
+            self.description = f"用来语义搜索 {csv} CSV 内容的查询工具。"
             self.args_schema = FixedCSVSearchToolSchema
             self._generate_description()
 

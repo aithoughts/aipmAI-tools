@@ -18,7 +18,7 @@ class FileReadToolSchema(FixedFileReadToolSchema):
 
 class FileReadTool(BaseTool):
     name: str = "读取文件内容"
-    description: str = "一个可以用来读取文件内容的工具。"
+    description: str = "用来读取文件内容的工具。"
     args_schema: Type[BaseModel] = FileReadToolSchema
     file_path: Optional[str] = None
 
@@ -30,7 +30,7 @@ class FileReadTool(BaseTool):
         super().__init__(**kwargs)
         if file_path is not None:
             self.file_path = file_path
-            self.description = f"一个可以用来读取 {file_path} 内容的工具。"
+            self.description = f"用来读取 {file_path} 内容的工具。"
             self.args_schema = FixedFileReadToolSchema
             self._generate_description()
 

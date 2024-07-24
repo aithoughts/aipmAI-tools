@@ -5,11 +5,11 @@ from crewai_tools.tools.base_tool import BaseTool
 
 class EXABaseToolToolSchema(BaseModel):
     """EXABaseTool 的输入"""
-    search_query: str = Field(..., description="您想用来搜索互联网的必需搜索查询")
+    search_query: str = Field(..., description="您想用来搜索互联网的必填搜索查询")
 
 class EXABaseTool(BaseTool):
     name: str = "搜索互联网"
-    description: str = "一个可以使用 search_query 搜索互联网的工具"
+    description: str = "使用 search_query 搜索互联网的工具"
     args_schema: Type[BaseModel] = EXABaseToolToolSchema
     search_url: str = "https://api.exa.ai/search"
     n_results: int = None

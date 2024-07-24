@@ -11,7 +11,7 @@ class FixedYoutubeChannelSearchToolSchema(BaseModel):
 
     search_query: str = Field(
         ...,
-        description="用于搜索 Youtube 频道内容的必需搜索查询",
+        description="用于搜索 Youtube 频道内容的搜索查询（必填）",
     )
 
 
@@ -19,20 +19,20 @@ class YoutubeChannelSearchToolSchema(FixedYoutubeChannelSearchToolSchema):
     """YoutubeChannelSearchTool 的输入"""
 
     youtube_channel_handle: str = Field(
-        ..., description="要搜索的 Youtube 频道句柄的必需路径"
+        ..., description="要搜索的 Youtube 频道句柄的路径（必填）"
     )
 
 
 class YoutubeChannelSearchTool(RagTool):
     name: str = "搜索 Youtube 频道内容"
-    description: str = "一个可以用来从 Youtube 频道内容中进行语义搜索的工具。"
+    description: str = "用来从 Youtube 频道内容中进行语义搜索的工具。"
     args_schema: Type[BaseModel] = YoutubeChannelSearchToolSchema
 
     def __init__(self, youtube_channel_handle: Optional[str] = None, **kwargs):
         super().__init__(**kwargs)
         if youtube_channel_handle is not None:
             self.add(youtube_channel_handle)
-            self.description = f"一个可以用来在 {youtube_channel_handle} Youtube 频道内容中进行语义搜索的工具。"
+            self.description = f"用来在 {youtube_channel_handle} Youtube 频道内容中进行语义搜索的工具。"
             self.args_schema = FixedYoutubeChannelSearchToolSchema
             self._generate_description()
 

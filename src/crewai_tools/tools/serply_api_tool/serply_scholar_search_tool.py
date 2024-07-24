@@ -8,7 +8,7 @@ from crewai_tools.tools.base_tool import BaseTool
 
 class SerplyScholarSearchToolSchema(BaseModel):
     """Serply 学术搜索的输入。"""
-    search_query: str = Field(..., description="要用于获取学术文献的必填搜索查询")
+    search_query: str = Field(..., description="用于获取学术文献的必填搜索查询")
 
 
 class SerplyScholarSearchTool(BaseTool):

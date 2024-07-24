@@ -11,20 +11,20 @@ class FixedXMLSearchToolSchema(BaseModel):
 
     search_query: str = Field(
         ...,
-        description="用于搜索 XML 内容的必需搜索查询",
+        description="用于搜索 XML 内容的搜索查询（必填）",
     )
 
 
 class XMLSearchToolSchema(FixedXMLSearchToolSchema):
     """XMLSearchTool 的输入"""
 
-    xml: str = Field(..., description="要搜索的 XML 文件的必需路径")
+    xml: str = Field(..., description="要搜索的 XML 文件的路径（必填）")
 
 
 class XMLSearchTool(RagTool):
     name: str = "搜索 XML 内容"
     description: str = (
-        "一个可以用来从 XML 内容中进行语义搜索的工具。"
+        "用来从 XML 内容中进行语义搜索的工具。"
     )
     args_schema: Type[BaseModel] = XMLSearchToolSchema
 
@@ -32,7 +32,7 @@ class XMLSearchTool(RagTool):
         super().__init__(**kwargs)
         if xml is not None:
             self.add(xml)
-            self.description = f"一个可以用来在 {xml} XML 内容中进行语义搜索的工具。"
+            self.description = f"用来在 {xml} XML 内容中进行语义搜索的工具。"
             self.args_schema = FixedXMLSearchToolSchema
             self._generate_description()
 

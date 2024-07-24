@@ -29,7 +29,7 @@ tool = YoutubeVideoSearchTool(youtube_video_url='https://youtube.com/watch?v=exa
 
 YoutubeVideoSearchTool 接受以下初始化参数：
 
-- `youtube_video_url`：初始化时的一个可选参数，但如果要定位特定 Youtube 视频，则为必需参数。它指定要在其中进行搜索的 Youtube 视频 URL 路径。
+- `youtube_video_url`：初始化时的一个可选参数，但如果要定位特定 Youtube 视频，则为必填参数。它指定要在其中进行搜索的 Youtube 视频 URL 路径。
 
 ## 自定义模型和嵌入
 

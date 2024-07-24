@@ -26,7 +26,7 @@ tool = WebsiteSearchTool(website='https://example.com')
 ```
 
 ## 参数
-- `website` ：一个可选参数，用于指定要在其上执行搜索的有效网站 URL。如果工具在初始化时未指定特定网站，则此参数 becomes necessary。在 `WebsiteSearchToolSchema` 中，此参数是必需的。但是，在 `FixedWebsiteSearchToolSchema` 中，如果在工具初始化期间提供了网站，则此参数 becomes optional，因为它将仅在预定义网站的内容中进行搜索。
+- `website` ：一个可选参数，用于指定要在其上执行搜索的有效网站 URL。如果工具在初始化时未指定特定网站，则此参数 becomes necessary。在 `WebsiteSearchToolSchema` 中，此参数是必填的。但是，在 `FixedWebsiteSearchToolSchema` 中，如果在工具初始化期间提供了网站，则此参数 becomes optional，因为它将仅在预定义网站的内容中进行搜索。
 
 ## 自定义模型和嵌入
 

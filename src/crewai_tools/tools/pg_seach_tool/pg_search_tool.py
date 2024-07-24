@@ -11,20 +11,20 @@ class PGSearchToolSchema(BaseModel):
 
     search_query: str = Field(
         ...,
-        description="要用于搜索数据库内容的必需语义搜索查询",
+        description="用于搜索数据库内容的必填语义搜索查询",
     )
 
 
 class PGSearchTool(RagTool):
     name: str = "搜索数据库的表内容"
-    description: str = "一个可以用来从数据库表的内容中进行语义搜索的工具。"
+    description: str = "用来从数据库表的内容中进行语义搜索的工具。"
     args_schema: Type[BaseModel] = PGSearchToolSchema
-    db_uri: str = Field(..., description="必需的数据库 URI")
+    db_uri: str = Field(..., description="必填的数据库 URI")
 
     def __init__(self, table_name: str, **kwargs):
         super().__init__(**kwargs)
         self.add(table_name)
-        self.description = f"一个可以用来在 {table_name} 数据库表的内容中进行语义搜索的工具。"
+        self.description = f"用来在 {table_name} 数据库表的内容中进行语义搜索的工具。"
         self._generate_description()
 
     def add(

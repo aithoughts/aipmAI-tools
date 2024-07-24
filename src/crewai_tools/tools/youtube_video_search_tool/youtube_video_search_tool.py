@@ -11,7 +11,7 @@ class FixedYoutubeVideoSearchToolSchema(BaseModel):
 
     search_query: str = Field(
         ...,
-        description="用于搜索 Youtube 视频内容的必需搜索查询",
+        description="用于搜索 Youtube 视频内容的搜索查询（必填）",
     )
 
 
@@ -19,20 +19,20 @@ class YoutubeVideoSearchToolSchema(FixedYoutubeVideoSearchToolSchema):
     """YoutubeVideoSearchTool 的输入"""
 
     youtube_video_url: str = Field(
-        ..., description="要搜索的 Youtube 视频网址的必需路径"
+        ..., description="要搜索的 Youtube 视频网址的路径（必填）"
     )
 
 
 class YoutubeVideoSearchTool(RagTool):
     name: str = "搜索 Youtube 视频内容"
-    description: str = "一个可以用来从 Youtube 视频内容中进行语义搜索的工具。"
+    description: str = "用来从 Youtube 视频内容中进行语义搜索的工具。"
     args_schema: Type[BaseModel] = YoutubeVideoSearchToolSchema
 
     def __init__(self, youtube_video_url: Optional[str] = None, **kwargs):
         super().__init__(**kwargs)
         if youtube_video_url is not None:
             self.add(youtube_video_url)
-            self.description = f"一个可以用来在 {youtube_video_url} Youtube 视频内容中进行语义搜索的工具。"
+            self.description = f"用来在 {youtube_video_url} Youtube 视频内容中进行语义搜索的工具。"
             self.args_schema = FixedYoutubeVideoSearchToolSchema
             self._generate_description()
 

@@ -11,20 +11,20 @@ class FixedPDFSearchToolSchema(BaseModel):
     """PDFSearchTool 的输入。"""
 
     query: str = Field(
-        ..., description="要用于搜索 PDF 内容的必填查询"
+        ..., description="要用于搜索PDF内容查询（必填）"
     )
 
 
 class PDFSearchToolSchema(FixedPDFSearchToolSchema):
     """PDFSearchTool 的输入。"""
 
-    pdf: str = Field(..., description="要搜索的必填 PDF 路径")
+    pdf: str = Field(..., description="要搜索的PDF路径（必填）")
 
 
 class PDFSearchTool(RagTool):
-    name: str = "搜索 PDF 内容"
+    name: str = "搜索PDF内容"
     description: str = (
-        "一个可以用来从 PDF 内容中进行语义搜索的工具。"
+        "用来从PDF内容中进行语义搜索的工具。"
     )
     args_schema: Type[BaseModel] = PDFSearchToolSchema
 
@@ -32,7 +32,7 @@ class PDFSearchTool(RagTool):
         super().__init__(**kwargs)
         if pdf is not None:
             self.add(pdf)
-            self.description = f"一个可以用来在 {pdf} PDF 内容中进行语义搜索的工具。"
+            self.description = f"用来在 {pdf} PDF内容中进行语义搜索的工具。"
             self.args_schema = FixedPDFSearchToolSchema
             self._generate_description()
 

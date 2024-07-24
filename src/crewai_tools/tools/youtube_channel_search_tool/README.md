@@ -26,7 +26,7 @@ tool = YoutubeChannelSearchTool(youtube_channel_handle='@exampleChannel')
 ```
 
 ## 参数
-- `youtube_channel_handle` ：表示 Youtube 频道句柄的必需字符串。此参数对于初始化工具以指定要在其中进行搜索的频道至关重要。该工具旨在仅在提供的频道句柄的内容中进行搜索。
+- `youtube_channel_handle` ：表示 Youtube 频道句柄的必填字符串。此参数对于初始化工具以指定要在其中进行搜索的频道至关重要。该工具旨在仅在提供的频道句柄的内容中进行搜索。
 
 ## 自定义模型和嵌入
 

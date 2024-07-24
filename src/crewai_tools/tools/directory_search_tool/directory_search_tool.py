@@ -11,20 +11,20 @@ class FixedDirectorySearchToolSchema(BaseModel):
 
     search_query: str = Field(
         ...,
-        description="您想用来搜索目录内容的必需搜索查询",
+        description="要用于搜索目录内容的必填搜索查询",
     )
 
 
 class DirectorySearchToolSchema(FixedDirectorySearchToolSchema):
     """DirectorySearchTool 的输入"""
 
-    directory: str = Field(..., description="您想搜索的必需目录")
+    directory: str = Field(..., description="要搜索的目录（必填）")
 
 
 class DirectorySearchTool(RagTool):
     name: str = "搜索目录内容"
     description: str = (
-        "一个可以用来从目录内容中语义搜索查询的工具。"
+        "用于对目录内容进行语义搜索查询的工具。"
     )
     args_schema: Type[BaseModel] = DirectorySearchToolSchema
 
@@ -32,7 +32,7 @@ class DirectorySearchTool(RagTool):
         super().__init__(**kwargs)
         if directory is not None:
             self.add(directory)
-            self.description = f"一个可以用来语义搜索 {directory} 目录内容的查询工具。"
+            self.description = f"用于对 {directory} 目录内容进行语义搜索查询的工具。"
             self.args_schema = FixedDirectorySearchToolSchema
             self._generate_description()
 

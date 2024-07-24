@@ -11,20 +11,20 @@ class FixedMDXSearchToolSchema(BaseModel):
 
     search_query: str = Field(
         ...,
-        description="要用于搜索 MDX 内容的必填搜索查询",
+        description="要用于搜索MDX内容的搜索查询（必填）",
     )
 
 
 class MDXSearchToolSchema(FixedMDXSearchToolSchema):
     """MDXSearchTool 的输入"""
 
-    mdx: str = Field(..., description="要搜索的必填 mdx 路径")
+    mdx: str = Field(..., description="要搜索的MDX路径（必填）")
 
 
 class MDXSearchTool(RagTool):
-    name: str = "搜索 MDX 的内容"
+    name: str = "搜索MDX的内容"
     description: str = (
-        "可以用来从 MDX 的内容中进行语义搜索的工具。"
+        "用来从MDX的内容中进行语义搜索的工具。"
     )
     args_schema: Type[BaseModel] = MDXSearchToolSchema
 
@@ -32,7 +32,7 @@ class MDXSearchTool(RagTool):
         super().__init__(**kwargs)
         if mdx is not None:
             self.add(mdx)
-            self.description = f"可以用来在 {mdx} MDX 的内容中进行语义搜索的工具。"
+            self.description = f"用来在 {mdx} MDX的内容中进行语义搜索的工具。"
             self.args_schema = FixedMDXSearchToolSchema
             self._generate_description()
 

@@ -11,20 +11,20 @@ class FixedTXTSearchToolSchema(BaseModel):
 
     search_query: str = Field(
         ...,
-        description="用于搜索文本内容的必需搜索查询",
+        description="用于搜索文本内容的搜索查询（必填）",
     )
 
 
 class TXTSearchToolSchema(FixedTXTSearchToolSchema):
     """TXTSearchTool 的输入"""
 
-    txt: str = Field(..., description="要搜索的文本文件的必需路径")
+    txt: str = Field(..., description="要搜索的文本文件的路径（必填）")
 
 
 class TXTSearchTool(RagTool):
     name: str = "搜索文本内容"
     description: str = (
-        "一个可以用来从文本内容中进行语义搜索的工具。"
+        "用来从文本内容中进行语义搜索的工具。"
     )
     args_schema: Type[BaseModel] = TXTSearchToolSchema
 
@@ -32,7 +32,7 @@ class TXTSearchTool(RagTool):
         super().__init__(**kwargs)
         if txt is not None:
             self.add(txt)
-            self.description = f"一个可以用来在 {txt} 文本内容中进行语义搜索的工具。"
+            self.description = f"用来在 {txt} 文本内容中进行语义搜索的工具。"
             self.args_schema = FixedTXTSearchToolSchema
             self._generate_description()
 

@@ -8,23 +8,23 @@ from ..rag.rag_tool import RagTool
 
 class FixedDOCXSearchToolSchema(BaseModel):
     """DOCXSearchTool 的输入"""
-    docx: Optional[str] = Field(..., description="您要搜索的 docx 文件的必填路径")
+    docx: Optional[str] = Field(..., description="搜索的 docx 文件的路径（必填）")
     search_query: str = Field(
         ...,
-        description="您要用于搜索 DOCX 内容的必需搜索查询",
+        description="用于搜索 DOCX 内容的搜索查询（必填）",
     )
 
 class DOCXSearchToolSchema(FixedDOCXSearchToolSchema):
     """DOCXSearchTool 的输入"""
     search_query: str = Field(
         ...,
-        description="您要用于搜索 DOCX 内容的必需搜索查询",
+        description="用于搜索 DOCX 内容的搜索查询（必填）",
     )
 
 class DOCXSearchTool(RagTool):
     name: str = "搜索 DOCX 内容"
     description: str = (
-        "一个可以用来从 DOCX 内容中语义搜索查询的工具。"
+        "用来从 DOCX 内容中语义搜索查询的工具。"
     )
     args_schema: Type[BaseModel] = DOCXSearchToolSchema
 
@@ -32,7 +32,7 @@ class DOCXSearchTool(RagTool):
         super().__init__(**kwargs)
         if docx is not None:
             self.add(docx)
-            self.description = f"一个可以用来语义搜索 {docx} DOCX 内容的查询工具。"
+            self.description = f"用来语义搜索 {docx} DOCX 内容的查询工具。"
             self.args_schema = FixedDOCXSearchToolSchema
             self._generate_description()
 

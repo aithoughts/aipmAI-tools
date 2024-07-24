@@ -11,14 +11,14 @@ class FixedCodeDocsSearchToolSchema(BaseModel):
 
     search_query: str = Field(
         ...,
-        description="您要用於搜索代码文档内容的必填搜索查询",
+        description="用于搜索代码文档内容的搜索查询（必填）",
     )
 
 
 class CodeDocsSearchToolSchema(FixedCodeDocsSearchToolSchema):
     """CodeDocsSearchTool 的输入"""
 
-    docs_url: str = Field(..., description="您要搜索的必填 docs_url 路径")
+    docs_url: str = Field(..., description="要搜索的 docs_url 路径（必填）")
 
 
 class CodeDocsSearchTool(RagTool):
@@ -32,7 +32,7 @@ class CodeDocsSearchTool(RagTool):
         super().__init__(**kwargs)
         if docs_url is not None:
             self.add(docs_url)
-            self.description = f"一个可以用来对 {docs_url} 代码文档内容进行语义搜索查询的工具。"
+            self.description = f"用来对 {docs_url} 代码文档内容进行语义搜索查询的工具。"
             self.args_schema = FixedCodeDocsSearchToolSchema
             self._generate_description()
 

@@ -28,8 +28,8 @@ tool = PGSearchTool(db_uri='postgresql://user:password@localhost:5432/mydatabase
 
 PGSearchTool 需要以下参数才能运行：
 
-- `db_uri`：表示要查询的 PostgreSQL 数据库的 URI 的字符串。此参数是必需的，并且必须包含必要的身份验证详细信息和数据库的位置。
-- `table_name`：指定将在其上执行语义搜索的数据库中表的名称的字符串。此参数是必需的。
+- `db_uri`：表示要查询的 PostgreSQL 数据库的 URI 的字符串。此参数是必填的，并且必须包含必要的身份验证详细信息和数据库的位置。
+- `table_name`：指定将在其上执行语义搜索的数据库中表的名称的字符串。此参数是必填的。
 
 ## 自定义模型和嵌入
 
